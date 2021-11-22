@@ -34,10 +34,6 @@ const DeleteAccount = ({
   
   return (
     <>
-      <Breadcrumb 
-        to="/my-account"
-        name="My account"
-      />
       <PageHeading
         title="Delete account."
         subtitle="Please confirm your current password."

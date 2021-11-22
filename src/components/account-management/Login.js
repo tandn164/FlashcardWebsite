@@ -14,7 +14,7 @@ const Login = () => {
   const history = useHistory();
   const [inputs, setInputs] = useState({ email: "", password: "" });
 
-  const { status, error, handleLogin} = useAuth(inputs.email, inputs.password);
+  const { status, error, handleLogin} = useAuth(null, inputs.email, inputs.password);
   const { user } = useContext(firebaseAuth);
 
   const handleSubmit = (e) => {

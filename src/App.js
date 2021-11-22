@@ -19,7 +19,6 @@ import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
 import MobileMenu from './components/MobileMenu';
-import ResetPassword from './components/account-management/ResetPassword';
 import Footer from './components/Footer';
 
 const fisherYatesShuffle = (array) => {
@@ -116,12 +115,6 @@ const App = () => {
         <Route path="/sign-up">
           <Signup />
           <Footer />
-        </Route>
-        <Route path="/reset-password">
-          <main>
-            <ResetPassword />
-            <Footer />
-          </main>
         </Route>
         <Route path="/my-account">
           <main>

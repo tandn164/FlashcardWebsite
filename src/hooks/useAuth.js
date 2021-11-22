@@ -32,11 +32,9 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     if (login === 0 || user != null) return;
     setError(null);
     setStatus("loading");
-
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       let _user = userCredential.user;
-      console.log("Logged in: ", _user)
       setUserData(_user);
       setStatus("success");
     })
@@ -45,7 +43,6 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       setError(error);
       setStatus("error");
     })
-
   }, [login]);
 
   // Signing user up
@@ -57,9 +54,9 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       .then((userCredential) => {
         let _user = userCredential.user;
         db.collection('users').doc(_user.uid).set({
-          username: username,
           decks: []
         });
+        userCredential.user.updateProfile({displayName: username})
         setUserData(_user);
         setStatus("success");
       })

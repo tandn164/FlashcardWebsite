@@ -40,13 +40,8 @@ const ChangePassword = ({
   
   return (
     <>
-      <Breadcrumb 
-        to="/my-account"
-        name="My account"
-      />
       <PageHeading
-        title="Change password."
-        subtitle="Please enter your current password, and then a new password."
+        title="パスワードを変更してください"
       />
       <form onSubmit={(event) => {
         event.preventDefault();

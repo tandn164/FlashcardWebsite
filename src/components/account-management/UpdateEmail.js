@@ -40,13 +40,8 @@ const UpdateEmail = ({
 
   return (
     <>
-      <Breadcrumb 
-        to="/my-account"
-        name="My account"
-      />
       <PageHeading
-        title="Update email."
-        subtitle="Please enter your current password, and then an updated email address."
+        title="メールを更新する"
       />
       <form onSubmit={(event) => {
         event.preventDefault();

@@ -38,10 +38,9 @@ const Nav = ({
   }
 
   return (
-    <header className={navClasses}>
+    <header className={navClasses} style={{background: '#526CC6'}}>
       <div className="navbar-inner">
         <Link to="/" className="logo">
-          <FontAwesomeIcon icon={faReply} size="2x" className="icon"/>&nbsp;&nbsp;
           Flash Cards
         </Link>
         <div className="right-nav">

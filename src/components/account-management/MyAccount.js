@@ -6,7 +6,7 @@
 
 import React, { useState, useContext } from 'react';
 import { firebaseAuth } from '../../provider/AuthProvider';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -31,6 +31,7 @@ const MyAccount = () => {
   } = useAuth(inputs.email, inputs.password, inputs.newPassword);
 
   const { user } = useContext(firebaseAuth);
+  const history = useHistory();
 
   const handleChange = e => {
     const { name, value } = e.target;
@@ -38,52 +39,38 @@ const MyAccount = () => {
   }
 
   if (!user) {
-    return (
-      <div className="dashboard">
-        <PageHeading
-          title=":( Not logged in."
-          subtitle="You are not logged in. To view your dashboard, log in or sign up."
-        />
-        <br/><br/><br/><br/><br/><br/>
-      </div>
-    );
+    history.push("/log-in");
   }
 
   return (
     <div className="my-account">
-      <div className="my-account-inner">
+      <div className="my-account-inner" style={{width: '50%', margin: '0 auto'}}>
         <Switch>
           <Route exact path="/my-account">
-            <Breadcrumb
-              to="/"
-              name="Home"
-            />
-            <PageHeading
-              title="Your account."
-              subtitle="Update your email and password or delete your account."
-            />
-            <div className="account-data">
-              <p><FontAwesomeIcon icon={faEnvelope} />&nbsp;&nbsp;&nbsp;{user.email} </p>
-                <Link to="/my-account/change-email" className="btn btn-tertiary">
-                  <span>Update your email</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+            <div>
+              <PageHeading
+                title="アカウント"
+              />
+              <div className="account-data">
+                  <Link to="/my-account/change-email" className="btn btn-tertiary">
+                    <span>メールを更新する</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                  </Link>
+              </div>
+              <div className="account-data">
+                <Link to="/my-account/change-password" className="btn btn-tertiary">
+                  <span>パスワードを変更してください</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
                 </Link>
-            </div>
-            <div className="account-data">
-            <p><FontAwesomeIcon icon={faLock} />&nbsp;&nbsp;&nbsp;******************** </p>
-              <Link to="/my-account/change-password" className="btn btn-tertiary">
-                <span>Change your password</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
-              </Link>
-            
-            </div>
-            <div className="account-data">
-              <Link to="/log-out" className="btn btn-tertiary">
-                <span>Log out</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
-              </Link>
-            </div>
-            <div className="account-data">
-              <Link to="/my-account/delete-account" className="btn btn-warning">
-                <FontAwesomeIcon icon={faTrash} />&nbsp;&nbsp;&nbsp;Delete Account
-              </Link>
+              </div>
+              <div className="account-data">
+                <Link to="/log-out" className="btn btn-tertiary">
+                  <span>ログアウト</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                </Link>
+              </div>
+              <div className="account-data">
+                <Link to="/my-account/delete-account" className="btn btn-warning">
+                  <FontAwesomeIcon icon={faTrash} />&nbsp;&nbsp;&nbsp;アカウントを削除する
+                </Link>
+              </div>
             </div>
           </Route>
 

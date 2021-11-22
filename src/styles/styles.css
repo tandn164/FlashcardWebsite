@@ -435,13 +435,13 @@ textarea:focus {
 }
 
 .navbar .navbar-inner .logo .icon {
-  color: #96f4b4;
+  color: white;
   -webkit-transition: color .3s;
   transition: color .3s;
 }
 
 .navbar .navbar-inner .logo:hover {
-  color: #96f4b4;
+  color: white;
 }
 
 .navbar .navbar-inner a {
@@ -449,19 +449,19 @@ textarea:focus {
 }
 
 .navbar .navbar-inner a:hover {
-  color: #96f4b4;
+  color: white;
 }
 
 .navbar.light .logo {
-  color: #504f5b;
+  color: white;
 }
 
 .navbar.light a {
-  color: #504f5b;
+  color: white;
 }
 
 .navbar.light .btn.btn-hamburger span {
-  background-color: #504f5b;
+  background-color: white;
 }
 
 .large-screen-only {
@@ -542,7 +542,7 @@ form {
 
 form .input-block {
   background-color: white;
-  border: 2px solid #504f5b;
+  border: 2px solid white;
   border-radius: 2rem;
   padding: .5rem;
   font-size: 1.1rem;
@@ -551,7 +551,7 @@ form .input-block {
 }
 
 form .input-block .btn.btn-icon {
-  color: #504f5b;
+  color: white;
 }
 
 form .input-block .input-row {
@@ -994,7 +994,7 @@ footer .curve svg path {
 }
 
 footer .logo {
-  color: #b6b6b6;
+  color:white;
   font-weight: 900;
   font-size: 1.5rem;
 }
@@ -1259,12 +1259,12 @@ footer p {
     transition: .3s;
   }
   a:hover, ul li a:hover {
-    color: #39a95d;
+    color: white;
   }
   .btn:hover {
     background-color: #96f4b4;
     border-color: #96f4b4;
-    color: #504f5b;
+    color: white;
   }
   .btn.btn-tertiary:hover {
     border-color: #eee;

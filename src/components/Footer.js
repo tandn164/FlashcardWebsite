@@ -10,9 +10,9 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 const Footer = () => {
   return (
-    <footer>
+    <footer style={{background: '#526CC6'}}>
       <section>
-        <span className="logo">Flash Cards</span>
+        <span className="logo">赤黒</span>
       </section>
     </footer>
   );
