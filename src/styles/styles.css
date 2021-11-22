@@ -39,7 +39,7 @@ a.breadcrumb {
 }
 
 a.active {
-  color: #39a95d;
+  color: white;
 }
 
 p {
@@ -1216,7 +1216,7 @@ footer p {
     white-space: nowrap;
   }
   .navbar ul li a.active {
-    color: #39a95d;
+    color: white;
   }
   .hero h1 {
     font-size: 2.5rem;
