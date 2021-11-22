@@ -1,7 +1,3 @@
-/**
- * Renders the login page and handles displaying login errors.
- */
-
 import React, { useState, useContext, useEffect } from 'react';
 import { firebaseAuth } from '../../provider/AuthProvider';
 import { Link, useHistory } from 'react-router-dom';
@@ -48,39 +44,43 @@ const Login = () => {
         setErrorMessage("");
         return;
       case "auth/user-not-found":
-        setErrorMessage("The email and password do not match.");
+        setErrorMessage("メールアドレスとパスワードが一致しません。");
         return;
       case "auth/wrong-password":
-        setErrorMessage("The email and password do not match.");
+        setErrorMessage("メールアドレスとパスワードが一致しません。");
         return;
       case "auth/invalid-email":
-        setErrorMessage("Please enter a valid email address.");
+        setErrorMessage("有効なメールアドレスを入力してください。");
         return;
       default:
-        setErrorMessage("Something went wrong. Please try again.");
+        setErrorMessage("何かがうまくいかなかった。もう一度やり直してください。");
         return;
     }
 
   }, [error]);
 
   return (
-    <div className="login">
-      <PageHeading 
-        title="Hey there!"
-        subtitle="Log in with your credentials."
-      />
-      <form onSubmit={handleSubmit}>
+    <div className="login" style={{textAlign: 'center'}}>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginRight: 200}}>
+        <div style={{display: 'flex', paddingRight: 50, fontSize: 25, alignItems: 'center'}}>
+          <Link to="/sign-up">サインアップ</Link>
+        </div>
+        <PageHeading 
+          title="ログイン"
+        />
+      </div>
+      <form style={{display: 'inline-block'}} onSubmit={handleSubmit}>
         <TextInput 
-          labelText="Email"
+          labelText="メールアドレス"
           icon={<FontAwesomeIcon icon={faEnvelope} />}
           id="email"
           name="email"
           value={inputs.email}
           onChange={handleChange}
-          placeholder="youremail@example.com"
+          placeholder="メールアドレス"
         />
         <TextInput 
-          labelText="Password"
+          labelText="パスワード"
           icon={<FontAwesomeIcon icon={faLock} />}
           type="password"
           id="password"
@@ -91,13 +91,12 @@ const Login = () => {
         {errorMessage !== "" && <p className="error">{errorMessage}</p>}
         <button 
           className="btn btn-primary"
+          style={{backgroundColor: '#526CC6', borderColor: 'unset', borderRadius: 20, borderWidth: 0}}
           disabled={inputs.password === "" || inputs.email === ""}        
         >
-          {status === "loading" ? "Loading . . . " : status === "success" ? "Success!" : "Go!"}
+          {status === "loading" ? "Loading . . . " : status === "success" ? "成功" : "ログイン"}
         </button>
       </form>
-      <p>Forgot your credentials? <Link to="/reset-password">Reset your password</Link>.</p>
-      <p>No account? <Link to="/sign-up">Sign up</Link>.</p>
     </div>
   );
 }

@@ -13,7 +13,7 @@ import { useState, useEffect, useContext } from 'react';
 import { auth, db, fb } from '../firebase/firebaseIndex';
 import { firebaseAuth } from '../provider/AuthProvider';
 
-const useAuth = (email = null, password = null, newPassword = null) => {
+const useAuth = (username = null, email = null, password = null, newPassword = null) => {
   const { user } = useContext(firebaseAuth);
 
   const [userData, setUserData] = useState(null);
@@ -53,11 +53,11 @@ const useAuth = (email = null, password = null, newPassword = null) => {
     if (signup === 0 || user != null) return;
     setError(null);
     setStatus("loading");
-
     auth.createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         let _user = userCredential.user;
         db.collection('users').doc(_user.uid).set({
+          username: username,
           decks: []
         });
         setUserData(_user);

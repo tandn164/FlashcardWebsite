@@ -1,7 +1,3 @@
-/**
- * Handles rendering the signup page and displaying signup errors.
- */
-
 import React, { useState, useContext, useEffect } from 'react';
 import { firebaseAuth } from '../../provider/AuthProvider';
 import { Link, useHistory } from 'react-router-dom';
@@ -14,12 +10,11 @@ import PageHeading from '../PageHeading';
 import TextInput from '../TextInput';
 
 const Signup = () => {
-  const [tos, setTos] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [inputs, setInputs] = useState({ email: "", password: "" });
+  const [inputs, setInputs] = useState({username: "", email: "", password: "" });
   const history = useHistory();
 
-  const { status, error, handleSignup} = useAuth(inputs.email, inputs.password);
+  const { status, error, handleSignup} = useAuth(inputs.username, inputs.email, inputs.password);
   const { user } = useContext(firebaseAuth);
 
   const handleSubmit = (e) => {
@@ -54,66 +49,65 @@ const Signup = () => {
         setErrorMessage("");
         return;
       case "auth/weak-password":
-        setErrorMessage("Your password must be at least 6 characters long");
+        setErrorMessage("パスワードは6文字以上である必要があります。");
         return;
       case "auth/email-already-in-use":
-        setErrorMessage("This email is already registered.");
+        setErrorMessage("このメールはすでに登録されています。");
         return;
       case "auth/invalid-email":
-        setErrorMessage("Please enter a valid email address.");
+        setErrorMessage("有効なメールアドレスを入力してください。");
         return;
       default:
-        setErrorMessage("Something went wrong. Please try again.");
+        setErrorMessage("何かがうまくいかなかった。 もう一度やり直してください。");
         return;
     }
   }, [error]);
 
   return (
-    <div className="signup">
-      <PageHeading 
-        title="Welcome!"
-        subtitle="Create an account."
+    <div className="signup" style={{textAlign: 'center'}}>
+      <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginRight: 200}}>
+        <div style={{display: 'flex', paddingRight: 50, fontSize: 25, alignItems: 'center'}}>
+          <Link to="/log-in">ログイン</Link>
+        </div>
+        <PageHeading 
+        title="サインアップ"
       />
-      <form onSubmit={handleSubmit}>
+      </div>
+      <form style={{display: 'inline-block'}} onSubmit={handleSubmit}>
+      <TextInput 
+          labelText="ユーザー名"
+          id="username"
+          name="username"
+          placeholder="ユーザー名"
+          value={inputs.username}
+          onChange={handleChange}
+        />
         <TextInput 
-          labelText="Email"
+          labelText="メールアドレス"
           id="email"
           name="email"
-          placeholder="youremail@example.com"
+          placeholder="メールアドレス"
           value={inputs.email}
           onChange={handleChange}
           icon={<FontAwesomeIcon icon={faEnvelope} />}
         />
         <TextInput 
-          labelText="Password"
+          labelText="パスワード"
           id="password"
           name="password"
           type="password"
           value={inputs.password}
           onChange={handleChange}
         />
-        <div className="form-row">
-          <input
-            id="tos"
-            name="tos"
-            type="checkbox"
-            checked={tos ? true : false}
-            onChange={() => setTos(!tos)}
-          />
-          <label htmlFor="tos">
-            <span></span>
-            I agree to the Terms of Service.
-          </label>
-        </div>
         {errorMessage !== "" && <p className="error">{errorMessage}</p>}
         <button 
           className="btn btn-primary"
-          disabled={!tos || inputs.password === "" || inputs.email === ""}
+          style={{backgroundColor: '#526CC6', borderColor: 'unset', borderRadius: 20, borderWidth: 0}}
+          disabled={inputs.username === "" || inputs.password === "" || inputs.email === ""}
         >
-          {status === "loading" ? "Loading . . . " : status === "success" ? "Success!" : "Sign Up"}
+          {status === "loading" ? "Loading . . . " : status === "success" ? "成功" : "サインアップ"}
         </button>
       </form>
-      <p>Already have an account? <Link to="/log-in">Log in here</Link>.</p>
     </div>
   );
 }
