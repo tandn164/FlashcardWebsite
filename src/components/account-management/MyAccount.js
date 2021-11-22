@@ -4,22 +4,27 @@
  * DeleteAccount components.
  */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { firebaseAuth } from '../../provider/AuthProvider';
 import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight, faSignOutAlt, faLock, faEnvelope, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight, faTrash } from '@fortawesome/free-solid-svg-icons';
 
-import Breadcrumb from '../Breadcrumb';
 import ChangePassword from './ChangePassword';
 import DeleteAccount from './DeleteAccount';
 import PageHeading from '../PageHeading';
-import UpdateEmail from './UpdateEmail';
+import UpdateProfile from './UpdateProfile';
 
 const MyAccount = () => {
-  const [inputs, setInputs] = useState({ email: "", password: "", newPassword: "" });
+  const { user } = useContext(firebaseAuth);
+  const [inputs, setInputs] = useState({ 
+    email: user.email || "",
+    password: "", 
+    newPassword: "", 
+    username: user.displayName || "", 
+    avatarUrl: user.photoUrl || ""});
 
   const { 
     loading, 
@@ -27,10 +32,10 @@ const MyAccount = () => {
     status, 
     handleChangeEmail, 
     handleChangePassword, 
-    handleDeleteAccount 
-  } = useAuth(inputs.email, inputs.password, inputs.newPassword);
+    handleDeleteAccount,
+    resetStatus
+  } = useAuth(inputs.username, inputs.email, inputs.password, inputs.newPassword);
 
-  const { user } = useContext(firebaseAuth);
   const history = useHistory();
 
   const handleChange = e => {
@@ -75,13 +80,14 @@ const MyAccount = () => {
           </Route>
 
           <Route exact path="/my-account/change-email">
-            <UpdateEmail 
+            <UpdateProfile 
               handleChange={handleChange}
               inputs={inputs}
               loading={loading}
               onSubmit={handleChangeEmail}
               error={error}
               status={status}
+              onBack={resetStatus}
             />
           </Route>
 

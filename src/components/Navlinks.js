@@ -8,12 +8,12 @@ const Navlinks = ({
     <ul>
         <li>
           <NavLink to="/my-account" className="link" onClick={() => closeMenu()}>
-            My account
+            プロフィール
           </NavLink>
         </li>
         <li>
           <NavLink to="/log-out" className="link" onClick={() => closeMenu()}>
-            Log out
+            ログアウト
           </NavLink>
         </li>
     </ul>

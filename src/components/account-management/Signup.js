@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import PageHeading from '../PageHeading';
 import TextInput from '../TextInput';
@@ -81,6 +81,7 @@ const Signup = () => {
           placeholder="ユーザー名"
           value={inputs.username}
           onChange={handleChange}
+          icon={<FontAwesomeIcon icon={faUser} />}
         />
         <TextInput 
           labelText="メールアドレス"
@@ -105,7 +106,7 @@ const Signup = () => {
           style={{backgroundColor: '#526CC6', borderColor: 'unset', borderRadius: 20, borderWidth: 0}}
           disabled={inputs.username === "" || inputs.password === "" || inputs.email === ""}
         >
-          {status === "loading" ? "Loading . . . " : status === "success" ? "成功" : "サインアップ"}
+          {status === "loading" ? "読み込み中 . . . " : status === "success" ? "成功" : "サインアップ"}
         </button>
       </form>
     </div>

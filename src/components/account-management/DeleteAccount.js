@@ -35,15 +35,14 @@ const DeleteAccount = ({
   return (
     <>
       <PageHeading
-        title="Delete account."
-        subtitle="Please confirm your current password."
+        title="アカウントを削除する"
       />
       <form onSubmit={(event) => {
         event.preventDefault();
         onSubmit();
       }}>
         <TextInput 
-          labelText="Current password"
+          labelText="現在のパスワード"
           icon={<FontAwesomeIcon icon={faLock} />}
           type="password"
           id="password"
@@ -52,7 +51,7 @@ const DeleteAccount = ({
           onChange={handleChange}
         />
         {errorMessage !== "" && <p className="error">{errorMessage}</p>}
-        <button className="btn btn-warning">Permanently Delete Account</button>
+        <button className="btn btn-warning">アカウントを完全に削除する</button>
       </form>
     </>
   );

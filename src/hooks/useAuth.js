@@ -13,7 +13,7 @@ import { useState, useEffect, useContext } from 'react';
 import { auth, db, fb } from '../firebase/firebaseIndex';
 import { firebaseAuth } from '../provider/AuthProvider';
 
-const useAuth = (username = null, email = null, password = null, newPassword = null) => {
+const useAuth = (username = null, email = null, password = null, newPassword = null, avatarUrl = null) => {
   const { user } = useContext(firebaseAuth);
 
   const [userData, setUserData] = useState(null);
@@ -88,7 +88,6 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
 
   }, [logout]);
 
-  // Changing user email
   useEffect(() => {
     if (changeEmail === 0 || user === null) return;
     setError(null);
@@ -102,16 +101,23 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       console.log("User successfully reauthenticated.");
       auth.currentUser.updateEmail(email)
       .then(() => {
-        console.log("Successfully updated email.")
         setStatus("success");
       })
       .catch((error) => {
-        console.log("An error occurred updating the email: ", error.message);
+        setError(error.code);
+        setStatus("error");
+      });
+      setStatus("loading")
+      auth.currentUser.updateProfile({displayName: username, photoURL: avatarUrl})
+      .then(() => {
+        setUserData(auth.currentUser);
+        setStatus("success");
+      })
+      .catch((error) => {
         setError(error.code);
         setStatus("error");
       });
     }).catch((error) => {
-      console.log("An error occurred reauthenticating the user: ", error.message);
       setError(error.code);
       setStatus("error");
     })
@@ -132,15 +138,12 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     auth.currentUser.reauthenticateWithCredential(credential).then(function() {
       console.log("User successfully reauthenticated.");
       auth.currentUser.updatePassword(newPassword).then(function() {
-        console.log("Successfully updated password.");
         setStatus("success");
       }).catch((error) => {
-        console.log("An error occurred updating the password: ", error.message);
         setError(error.code);
         setStatus("error");
       });
     }).catch((error) => {
-      console.log("An error occurred reauthenticating the user: ", error.message);
       setError(error.code);
       setStatus("error");
     })
@@ -159,17 +162,13 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     );
 
     auth.currentUser.reauthenticateWithCredential(credential).then(function() {
-      console.log("User successfully reauthenticated.");
       auth.currentUser.delete().then(() => {
-        console.log("User successfully deleted.");
         setStatus("success");
       }).catch((error) => {
-        console.log("An error occurred deleting the user: ", error.message);
         setError(error.code);
         setStatus("error");
       })
     }).catch((error) => {
-      console.log("An error occurred reauthenticating the user: ", error.message);
       setError(error.code);
       setStatus("error");
     });
@@ -182,6 +181,7 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
   const handleChangeEmail = () => setChangeEmail(prev => prev + 1);
   const handleChangePassword = () => setChangePassword(prev => prev + 1);
   const handleDeleteAccount = () => setDeleteAccount(prev => prev + 1);
+  const resetStatus = () => setStatus('pending');
 
   return { 
     userData, 
@@ -193,6 +193,7 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     handleChangeEmail,
     handleChangePassword,
     handleDeleteAccount,
+    resetStatus
   };
 }
 

@@ -1,21 +1,17 @@
-/**
- * Displays the update email page.
- */
-
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faLock, faEnvelope, faUser } from '@fortawesome/free-solid-svg-icons';
 
-import Breadcrumb from '../Breadcrumb';
 import PageHeading from '../PageHeading';
 import TextInput from '../TextInput';
 
-const UpdateEmail = ({
+const UpdateProfile = ({
   handleChange,
   inputs,
   onSubmit,
   error,
-  status
+  status,
+  onBack
 }) => {
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,6 +34,10 @@ const UpdateEmail = ({
     }
   }, [error]);
 
+  useEffect(() => {
+    return () => onBack();
+  }, [])
+
   return (
     <>
       <PageHeading
@@ -48,7 +48,16 @@ const UpdateEmail = ({
         onSubmit();
       }}>
         <TextInput 
-          labelText="Current password"
+          labelText="ユーザー名"
+          icon={<FontAwesomeIcon icon={faUser} />}
+          type="username"
+          id="username"
+          name="username"
+          value={inputs.username}
+          onChange={handleChange}
+        />
+        <TextInput 
+          labelText="現在のパスワード"
           icon={<FontAwesomeIcon icon={faLock} />}
           type="password"
           id="password"
@@ -57,21 +66,23 @@ const UpdateEmail = ({
           onChange={handleChange}
         />
         <TextInput 
-          labelText="Email"
+          labelText="メルアドレス"
           icon={<FontAwesomeIcon icon={faEnvelope} />}
           id="email"
           name="email"
           value={inputs.email}
           onChange={handleChange}
-          placeholder="newemail@example.com"
+          placeholder="メルアドレス"
         />
         {errorMessage !== "" && <p className="error">{errorMessage}</p>}
-        <button className="btn btn-primary">
-          {status === "loading" ? "Loading . . . " : status === "success" ? "Success!" : "Update Email"}
+        <button className="btn btn-primary" 
+        style={{color: 'white', background: '#526CC6', border: 'unset'}}
+        disabled={inputs.password === "" || inputs.email === "" || inputs.username === ""}   >
+          {status === "loading" ? "読み込み中 . . . " : status === "success" ? "成功" : "メールを更新する"}
         </button>
       </form>
     </>
   );
 }
 
-export default UpdateEmail;
+export default UpdateProfile;

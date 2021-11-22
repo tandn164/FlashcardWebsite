@@ -94,7 +94,7 @@ const Login = () => {
           style={{backgroundColor: '#526CC6', borderColor: 'unset', borderRadius: 20, borderWidth: 0}}
           disabled={inputs.password === "" || inputs.email === ""}        
         >
-          {status === "loading" ? "Loading . . . " : status === "success" ? "成功" : "ログイン"}
+          {status === "loading" ? "読み込み中 . . . " : status === "success" ? "成功" : "ログイン"}
         </button>
       </form>
     </div>

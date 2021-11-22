@@ -48,7 +48,7 @@ const ChangePassword = ({
         onSubmit();
       }}>
         <TextInput 
-          labelText="Current password"
+          labelText="現在のパスワード"
           icon={<FontAwesomeIcon icon={faLock} />}
           type="password"
           id="password"
@@ -57,7 +57,7 @@ const ChangePassword = ({
           onChange={handleChange}
         />
         <TextInput 
-          labelText="New password"
+          labelText="新しいパスワード"
           icon={<FontAwesomeIcon icon={faLock} />}
           type="password"
           id="new-password"
@@ -66,8 +66,8 @@ const ChangePassword = ({
           onChange={handleChange}
         />
         {errorMessage !== "" && <p className="error">{errorMessage}</p>}
-        <button className="btn btn-primary">
-          {status === "loading" ? "Loading . . . " : status === "success" ? "Success!" : "Change Password"}
+        <button className="btn btn-primary"　style={{color: 'white', background: '#526CC6', border: 'unset'}}>
+          {status === "loading" ? "読み込み中 . . . " : status === "success" ? "成功" : "パスワードを変更する"}
         </button>
       </form>
     </>
