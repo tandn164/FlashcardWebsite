@@ -78,6 +78,8 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     .then(() => {
       console.log("Logged out");
       setUserData(null);
+      localStorage.removeItem('deck')
+      localStorage.removeItem('save_decks')
       setStatus("success");
     })
     .catch(error => {

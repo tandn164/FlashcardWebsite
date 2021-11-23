@@ -32,7 +32,7 @@ const DeckList = ({
           length={deck.numCards}
           // setSelectedDecks={setSelectedDecks}
           deck={deck}
-          mine={deck.owner == user.uid}
+          mine={user && deck.owner == user.uid}
           setDeckToEdit={() => {
             setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private, description: deck.description });
           }}
