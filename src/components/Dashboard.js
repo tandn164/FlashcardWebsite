@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useContext } from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import { firebaseAuth } from '../provider/AuthProvider';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -24,22 +24,17 @@ const Dashboard = ({
 }) => {
   const [deckToEdit, setDeckToEdit] = useState(null);
   const { user } = useContext(firebaseAuth);
+  const history = useHistory();
 
   if (!user) {
-    return (
-      <div className="dashboard">
-        <p>You are not logged in. To view your dashboard, log in or sign up here:</p>
-        <Link to="/">Home</Link>
-      </div>
-    );
+    history.push("/log-in");
   }
 
   return (
     <div className="dashboard">
-      <div className="dashboard-inner">
         <Switch>
           <Route path="/app/edit">
-            <DeckEditor 
+            <DeckEditor
               selectedDecks={selectedDecks}
               deckToEdit={deckToEdit}
               setDeckToEdit={setDeckToEdit}
@@ -47,54 +42,80 @@ const Dashboard = ({
             />
           </Route>
           <Route path="/app/create">
-            <Breadcrumb
-              to="/app"
-              name="Dashboard"
-            />
             <PageHeading 
               title="New Deck!"
-              subtitle="Create a new deck of flash cards. You can always come back and edit it at any time!"
             />
             <DeckCreator />
           </Route>
           <Route path="/app">
-            <Breadcrumb
-              to="/"
-              name="Home"
-            />
-            <PageHeading 
-              title="Dashboard."
-              subtitle="Select decks to study, then click shuffle."
-            />
-            <div>
-              <Link 
-                to="/app/create" 
-                className="btn btn-tertiary"
-              >
-                Create a new deck
-                <FontAwesomeIcon icon={faPlus} className="icon"/>
-              </Link>
-              <DeckList
-                decks={decks}
-                selectedDecks={selectedDecks}
-                setSelectedDecks={setSelectedDecks}
-                setDeckToEdit={setDeckToEdit}
-              />
+            <div style={{ display: 'flex' }}>
+              <div style={{ width: '50%', margin: '0 auto', paddingRight: 30 }}>
+                <PageHeading
+                  title="作ったセット"
+                />
+                <div>
+                  <DeckList
+                    decks={decks}
+                    selectedDecks={selectedDecks}
+                    setSelectedDecks={setSelectedDecks}
+                    setDeckToEdit={setDeckToEdit}
+                  />
+                </div>
+                <button
+                  id="shuffle"
+                  name="shuffle"
+                  onClick={onClick}
+                  style={{color: 'black', background: 'transparent', display: 'flex', border: 'unset', fontSize: 20, float: 'right'}}
+                > もっと見る
+                </button>
+              </div>
+              <div style={{ width: '50%', margin: '0 auto', paddingLeft: 30 }}>
+                <PageHeading
+                  title="保存したセット"
+                />
+                <div>
+                  <DeckList
+                    decks={decks}
+                    selectedDecks={selectedDecks}
+                    setSelectedDecks={setSelectedDecks}
+                    setDeckToEdit={setDeckToEdit}
+                  />
+                </div>
+                <button
+                  id="shuffle"
+                  name="shuffle"
+                  onClick={onClick}
+                  style={{color: 'black', background: 'transparent', display: 'flex', border: 'unset', fontSize: 20, float: 'right'}}
+                > もっと見る
+                </button>
+              </div>
+              <div style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 100, paddingLeft: 60, width: 200}}>
+                <button
+                  onClick={() => {
+                    history.push('/app/create')
+                  }}
+                  style={{color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30}}
+                >
+                  <><FontAwesomeIcon icon={faPlus} style={{marginRight: 5}} /> 新作</>
+                </button>
+                <button
+                  onClick={onClick}
+                  style={{color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30}}
+                >
+                  <><FontAwesomeIcon icon={faPlus} style={{marginRight: 5}} /> 復習</>
+                </button>
+                <button
+                  onClick={onClick}
+                  style={{color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30}}
+                >
+                  <><FontAwesomeIcon icon={faPlus} style={{marginRight: 5}} /> 履歴</>
+                </button>
+              </div>
             </div>
-            <button
-              id="shuffle"
-              name="shuffle"
-              onClick={onClick}
-              className="btn btn-primary"
-              disabled={cards.length === 0 ? true : false}
-            >
-              <><FontAwesomeIcon icon={faRandom} /> Shuffle!</>
-            </button>
           </Route>
         </Switch>
-      </div>
     </div>
   );
-} 
+}
 
 export default Dashboard;

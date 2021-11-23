@@ -1,0 +1,11 @@
+{
+  "short_name": "Flash Cards",
+  "name": "Flash Cards",
+  "icons": [
+    
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#526CC6",
+  "background_color": "#ffffff"
+}
