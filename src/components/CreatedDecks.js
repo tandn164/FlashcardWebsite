@@ -40,7 +40,7 @@
            </Route>
            <Route path="/app/create">
              <PageHeading 
-               title="New Deck!"
+               title="新セット"
              />
              <DeckCreator />
            </Route>
