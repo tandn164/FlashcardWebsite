@@ -54,9 +54,25 @@ export const dbMethods = {
       console.log("No user selected.");
       return;
     }
-    console.log(user)
     return db.collection('users').doc(user.uid).update({
       save_decks: firebase.firestore.FieldValue.arrayUnion(deck)
+    })
+    .then(() => {
+      console.log("Updated deck with id: ", deck.id);
+    })
+    .catch(err => {
+      console.error("Error updating document: ", err.message);
+      
+    });
+  },
+
+  unsaveDeck: (user, deck) => {
+    if (!user) {
+      console.log("No user selected.");
+      return;
+    }
+    return db.collection('users').doc(user.uid).update({
+      save_decks: firebase.firestore.FieldValue.arrayRemove({id: deck.id, numCards: deck.numCards, owner: deck.owner, private: deck.private, title: deck.title})
     })
     .then(() => {
       console.log("Updated deck with id: ", deck.id);

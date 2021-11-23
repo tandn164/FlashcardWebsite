@@ -38,7 +38,7 @@ const Home = ({
                       className="btn btn-cta"
                       to="/app"
                     >
-                      Dashboard
+                      ダッシュボード
                     </Link>
                   </>
                 </div>

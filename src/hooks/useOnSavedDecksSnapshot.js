@@ -14,6 +14,7 @@ const useOnSavedDecksSnapshot = (user) => {
         let arr = [];
         snapshot.data().save_decks.forEach(deck => arr.push(deck));
         setDecks(arr)
+        localStorage.setItem('save_decks', JSON.stringify(arr))
       }, error => console.log("Error: ", error.message))
       return () => unsubscribe();
     }, [user]);

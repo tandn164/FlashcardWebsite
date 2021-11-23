@@ -64,9 +64,7 @@ const DeckEditor = ({
       </form>
       <div>
         <PageHeading 
-          title="Cards."
-          subtitle="Add, edit, and remove cards from this deck."
-          heading="h2"
+          title="カード"
         />
         <Accordion
           deckId={selectedDecks[0]}
@@ -79,8 +77,6 @@ const DeckEditor = ({
       <div>
         <PageHeading 
           title="Delete deck."
-          subtitle="Permanently delete this deck and all its cards."
-          heading="h2"
         />
         <form onSubmit={deleteDeck}>
           <button

@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSave, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 import { dbMethods } from '../../firebase/dbMethods';
 import { firebaseAuth } from '../../provider/AuthProvider';
+import { db } from '../../firebase/firebaseIndex';
 
 const SelectableDeck = ({
   toggleDeck,
@@ -16,6 +17,24 @@ const SelectableDeck = ({
 }) => {
   const history = useHistory();
   const {user} = useContext(firebaseAuth)
+  const [saved, setSaved] = useState(false);
+  const savedDecksRaw = localStorage.getItem('save_decks')
+
+  useEffect(() => {
+    setSaved(isSaved())
+  },[])
+
+  const isSaved = () => {
+    if (!savedDecksRaw || savedDecksRaw.length == 0) {
+      return false
+    }
+    let savedDecks = JSON.parse(savedDecksRaw)
+    if (!savedDecks || savedDecks.length == 0) {
+      return false
+    }
+    let filterArray = savedDecks.filter(item => item.id == deck.id)
+    return (filterArray && filterArray.length > 0)
+  }
 
   return (
     <li style={{background: '#EAB2AE', marginBottom: 20, borderRadius: 10}}
@@ -36,14 +55,14 @@ const SelectableDeck = ({
         /> */}
         <label htmlFor="checkbox" className="truncate">
           <span></span>
-          <strong>{deck.title}</strong> ({length} {length === 1 ? "card" : "cards"})
+          <strong>{deck.title}</strong> ({length} {"カード"})
           
         </label>
       </div>
       <div className="button-row">
         {mine ? <button 
           className="btn btn-icon"
-          style={{color: 'white'}}
+          style={{color: 'black'}}
           onClick={(event) => {
             event.stopPropagation();
             setDeckToEdit();
@@ -55,13 +74,19 @@ const SelectableDeck = ({
         </button>
         : <button 
         className="btn btn-icon"
-        style={{color: 'white'}}
+        style={{color: 'black'}}
         onClick={(event) => {
           event.stopPropagation();
-          dbMethods.saveDeck(user, deck)
+          if (saved) {
+            dbMethods.unsaveDeck(user, deck)
+            setSaved(false)
+          } else {
+            dbMethods.saveDeck(user, deck)
+            setSaved(true)
+          }
         }}
       >
-        <FontAwesomeIcon icon={faSave} /> 保存する
+        <FontAwesomeIcon icon={saved ? faTrash : faSave} /> {saved ? "削除する" : "保存する"}
       </button>
         }
       </div>

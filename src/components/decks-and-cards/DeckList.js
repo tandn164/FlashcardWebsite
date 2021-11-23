@@ -47,7 +47,7 @@ const DeckList = ({
         {deckList.length > 0 ? 
           deckList
         :
-          <p>You have no decks. Create one to start!</p>
+          <p>セットがありません。 作成して開始してください！</p>
         }
       </ul>
     </div>
