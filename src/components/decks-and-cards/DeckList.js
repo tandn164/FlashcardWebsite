@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { firebaseAuth } from '../../provider/AuthProvider';
 import SelectableDeck from './SelectableDeck';
 
 const DeckList = ({
@@ -8,16 +9,17 @@ const DeckList = ({
   setDeckToEdit,
 }) => {
   const [deckList, setDeckList] = useState([]);
+  const { user } = useContext(firebaseAuth);
 
-  const toggleDeck = (deckId) => {
-    setSelectedDecks(decks => {
-      if (decks.includes(deckId)) {
-        return decks.filter(ele => ele !== deckId)
-      } else {
-        return [...decks, deckId];
-      }
-    });
-  }
+  // const toggleDeck = (deckId) => {
+  //   setSelectedDecks(decks => {
+  //     if (decks.includes(deckId)) {
+  //       return decks.filter(ele => ele !== deckId)
+  //     } else {
+  //       return [...decks, deckId];
+  //     }
+  //   });
+  // }
 
   useEffect(() => {
     if (!decks) {return}
@@ -25,20 +27,19 @@ const DeckList = ({
       return (
         <SelectableDeck 
           key={deck.id}
-          title={deck.title}
-          toggleDeck={toggleDeck}
-          id={deck.id}
-          isPrivate={deck.private}
-          selectedDecks={selectedDecks}
+          // toggleDeck={toggleDeck}
+          // selectedDecks={selectedDecks}
           length={deck.numCards}
-          setSelectedDecks={setSelectedDecks}
+          // setSelectedDecks={setSelectedDecks}
+          deck={deck}
+          mine={deck.owner == user.uid}
           setDeckToEdit={() => {
             setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private });
           }}
         />
       );}
     ));
-  }, [decks, selectedDecks]);
+  }, [decks]);
 
   return (
     <div className="deck-list">

@@ -3,7 +3,7 @@ import firebase from 'firebase';
 
 const useOnSavedDecksSnapshot = (user) => {
     const db = firebase.firestore();
-    const [decks, setDecks] = useState([]);
+    const [saveDecks, setDecks] = useState([]);
     useEffect(() => {
       if (!user) {
         setDecks([]);
@@ -17,7 +17,7 @@ const useOnSavedDecksSnapshot = (user) => {
       }, error => console.log("Error: ", error.message))
       return () => unsubscribe();
     }, [user]);
-    return { decks };
+    return { saveDecks };
   }
 
   export default useOnSavedDecksSnapshot;

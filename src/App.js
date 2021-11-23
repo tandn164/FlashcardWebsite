@@ -9,6 +9,8 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { firebaseAuth } from './provider/AuthProvider';
 import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
 import useGetShuffledCards from './hooks/useGetShuffledCards';
+import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
+import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 
 import Deck from './components/decks-and-cards/Deck';
 import Dashboard from './components/Dashboard';
@@ -20,8 +22,6 @@ import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
 import MobileMenu from './components/MobileMenu';
 import Footer from './components/Footer';
-import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
-import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 
 const fisherYatesShuffle = (array) => {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -153,7 +153,12 @@ const App = () => {
         </Route>
         <Route path="/">
           <main>
-            <Home />
+            <Home 
+              cards={cards} 
+              allDecks={allDecks} 
+              setSelectedDecks={setSelectedDecks} 
+              selectedDecks={selectedDecks}
+              />
             <Footer />
           </main>
         </Route>

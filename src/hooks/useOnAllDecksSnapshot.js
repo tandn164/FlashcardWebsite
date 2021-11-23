@@ -3,7 +3,7 @@ import firebase from 'firebase';
 
 const useOnAllDecksSnapshot = () => {
   const db = firebase.firestore();
-  const [decks, setDecks] = useState([]);
+  const [allDecks, setDecks] = useState([]);
 
   useEffect(() => {
     let ref = db.collection('decks');
@@ -16,7 +16,7 @@ const useOnAllDecksSnapshot = () => {
     return () => unsubscribe();
   }, []);
 
-  return { decks };
+  return { allDecks };
 }
 
 export default useOnAllDecksSnapshot;

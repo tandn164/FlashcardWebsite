@@ -6,17 +6,17 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faShare, faClone } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 
 import Lightbox from '../Lightbox';
 
 const SelectableDeck = ({
-  title,
   toggleDeck,
-  id,
   setSelectedDecks,
   length,
-  setDeckToEdit
+  deck,
+  setDeckToEdit,
+  mine
 }) => {
   const history = useHistory();
 
@@ -39,34 +39,34 @@ const SelectableDeck = ({
         /> */}
         <label htmlFor="checkbox" className="truncate">
           <span></span>
-          <strong>{title}</strong> ({length} {length === 1 ? "card" : "cards"})
+          <strong>{deck.title}</strong> ({length} {length === 1 ? "card" : "cards"})
           
         </label>
       </div>
       <div className="button-row">
-        <button 
+        {mine ? <button 
           className="btn btn-icon"
           onClick={(event) => {
             event.stopPropagation();
             setDeckToEdit();
-            setSelectedDecks([id]);
+            localStorage.setItem('deck', JSON.stringify(deck));
             history.push("/app/edit");
           }}
         >
-          <FontAwesomeIcon icon={faEdit} /> Edit
+          <FontAwesomeIcon icon={faEdit} /> 編集する
         </button>
-        
-        {/* <button 
-          className="btn btn-icon"
-          name="share-deck"
-          value={id}
-          onClick={event => {
-            event.stopPropagation();
-            setShareIsOpen(prev => !prev);
-          }}
-        >
-          <FontAwesomeIcon icon={faShare} /> Share
-        </button> */}
+        : <button 
+        className="btn btn-icon"
+        onClick={(event) => {
+          event.stopPropagation();
+          // setDeckToEdit();
+          // setSelectedDecks([id]);
+          // history.push("/app/edit");
+        }}
+      >
+        <FontAwesomeIcon icon={faSave} /> 保存する
+      </button>
+        }
       </div>
     </li>
   );

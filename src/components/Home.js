@@ -1,91 +1,93 @@
-import React, { useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useHistory, Switch, Route } from 'react-router-dom';
 import { firebaseAuth } from '../provider/AuthProvider';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleRight, faReply } from '@fortawesome/free-solid-svg-icons';
+import PageHeading from './PageHeading';
+import DeckList from './decks-and-cards/DeckList';
+import DeckEditor from './decks-and-cards/DeckEditor';
 
-import heroImage from '../images/hero.jpg';
-
-const Home = () => {
+const Home = ({
+  allDecks,
+  selectedDecks,
+  cards
+}) => {
   const { user } = useContext(firebaseAuth);
+  const [deckToEdit1, setDeckToEdit] = useState(null);
   const history = useHistory();
   if (!user) {
     history.push("/log-in");
   }
   return (
-    <>
-      <header className="hero">
-        <section>
-        <div className="hero-content">
-          <div className="buttons">
-          {user ? 
-            <>
-              <Link
-                className="btn btn-cta"
-                to="/app"
-              >
-                Dashboard
-              </Link>
-            </>
-          :
-            <>
-              <Link
-                className="btn btn-cta"
-                to="/sign-up"
-              >
-                Get started
-              </Link>
-            </>
-          }
-          </div>
-        </div>
-        <div className="hero-content"></div>
-        </section>
-        <div className="card-design">
-          <div>
-            <span></span>
-            <div>
-              <span></span>
-              <span></span>
-              <span></span>
+    <Switch>
+      <Route path="/app-edit" >
+        <DeckEditor
+          deckToEdit={deckToEdit1}
+          selectedDecks={selectedDecks}
+          setDeckToEdit={setDeckToEdit}
+          cards={cards}
+        />
+      </Route>
+      <Route path="/">
+        <>
+          <header className="hero">
+            <section>
+              <div className="hero-content">
+                <div className="buttons">
+                  <>
+                    <Link
+                      className="btn btn-cta"
+                      to="/app"
+                    >
+                      Dashboard
+                    </Link>
+                  </>
+                </div>
+              </div>
+            </section>
+            <div className="card-design">
+              <div>
+                <span></span>
+                <div>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div>
+                <span></span>
+                <div>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+              <div>
+                <span></span>
+                <div>
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
             </div>
-            <span><FontAwesomeIcon icon={faReply} /></span>
-          </div>
-          <div>
-            <span></span>
+          </header>
+
+          <section className="public-decks">
             <div>
-              <span></span>
-              <span></span>
-              <span></span>
+              <PageHeading
+                title="全てセット"
+              />
+              <div style={{textAlign: 'left'}}>
+                <DeckList
+                  decks={allDecks}
+                  setDeckToEdit={setDeckToEdit}
+                />
+              </div>
             </div>
-            <span><FontAwesomeIcon icon={faReply} /></span>
-          </div>
-          <div>
-            <span></span>
-            <div>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <span><FontAwesomeIcon icon={faReply} /></span>
-          </div>
-        </div>
-      </header>
-      
-      <section className="public-decks">
-        <h2>Public Flash Cards</h2><p>No account? No problem. Public flash cards are free for everyone to use!</p>
-        <Link to="/app/d/WOJrC5Mp87qzKcka2haX" className="btn btn-tertiary">
-          <span>Classical Music Composers</span> <FontAwesomeIcon icon={faAngleRight} className="icon"/>
-        </Link>
-        <Link to="/app/d/cYddMteaU6ZSYhyq5AHg" className="btn btn-tertiary">
-          <span>Star Trek Facts & Trivia</span> <FontAwesomeIcon icon={faAngleRight} className="icon"/>
-        </Link>
-        <Link to="/app/d/Fd73VQwvnOoNHFrqQHW2" className="btn btn-tertiary">
-          <span>Miscellaneous Trivia</span> <FontAwesomeIcon icon={faAngleRight} className="icon"/>
-        </Link>
-      </section>
-    </>
+          </section>
+        </>
+      </Route>
+    </Switch>
   );
 }
 

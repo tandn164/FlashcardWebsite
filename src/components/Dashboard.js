@@ -2,7 +2,7 @@
  * Displays the dashboard page.
  */
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Link, Switch, Route, useHistory } from 'react-router-dom';
 import { firebaseAuth } from '../provider/AuthProvider';
 
@@ -57,8 +57,6 @@ const Dashboard = ({
                 <div>
                   <DeckList
                     decks={decks}
-                    selectedDecks={selectedDecks}
-                    setSelectedDecks={setSelectedDecks}
                     setDeckToEdit={setDeckToEdit}
                   />
                 </div>

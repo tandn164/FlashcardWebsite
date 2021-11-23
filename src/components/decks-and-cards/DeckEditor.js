@@ -1,8 +1,3 @@
-/**
- * Displays the deck editor, and renders the card
- * editor accordion component.
- */
-
 import React, { useState, useContext } from 'react';
 import { firebaseAuth } from '../../provider/AuthProvider';
 import { dbMethods } from '../../firebase/dbMethods';
@@ -12,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeading } from '@fortawesome/free-solid-svg-icons';
 
 import Accordion from '../Accordion';
-import Breadcrumb from '../Breadcrumb';
 import CardCreator from './CardCreator';
 import PageHeading from '../PageHeading';
 import TextInput from '../TextInput';
@@ -25,12 +19,14 @@ const DeckEditor = ({
 }) => {
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
-  const [title, setTitle] = useState(deckToEdit.title);
+  const localDeck = JSON.parse(localStorage.getItem('deck'))
+  const deck = deckToEdit || localDeck;
+  const [title, setTitle] = useState(deck.title);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const updateDeck = (event) => {
     event.preventDefault();
-    dbMethods.updateDeck(user, deckToEdit.id, title)
+    dbMethods.updateDeck(user, deck.id, title)
     setDeckToEdit({...deckToEdit, title});
     setUpdateSuccess(true);
     setTimeout(() => setUpdateSuccess(false), 3000);
@@ -38,7 +34,7 @@ const DeckEditor = ({
 
   const deleteDeck = (event) => {
     event.preventDefault();
-    dbMethods.deleteDeck(user, deckToEdit.id);
+    dbMethods.deleteDeck(user, deck.id);
     history.push('/app');
     setDeckToEdit(null);
   }

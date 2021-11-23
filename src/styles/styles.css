@@ -81,8 +81,8 @@ button, a {
 }
 
 .btn.btn-cta {
-  background-color: #212121;
-  border-color: #212121;
+  background-color: #9B63A8;
+  border-color: transparent;
 }
 
 .btn.btn-secondary {
@@ -230,7 +230,7 @@ button, a {
 
 .hero {
   margin-bottom: 0;
-  background-color: #39a95d;
+  background-color: #0F36BE;
   color: white;
   /* min-height: 50vh; */
   position: relative;
