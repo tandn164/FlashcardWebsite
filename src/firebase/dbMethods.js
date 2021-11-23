@@ -49,6 +49,24 @@ export const dbMethods = {
     });
   },
 
+  saveDeck: (user, deck) => {
+    if (!user) {
+      console.log("No user selected.");
+      return;
+    }
+    console.log(user)
+    return db.collection('users').doc(user.uid).update({
+      save_decks: firebase.firestore.FieldValue.arrayUnion(deck)
+    })
+    .then(() => {
+      console.log("Updated deck with id: ", deck.id);
+    })
+    .catch(err => {
+      console.error("Error updating document: ", err.message);
+      
+    });
+  },
+
   updateDeck: (user, deckId, title) => {
     if (!user) {
       console.log("No user selected.");

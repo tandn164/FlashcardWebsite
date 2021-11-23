@@ -1,14 +1,10 @@
-/**
- * Displays each deck list item which contains a checkbox,
- * edit and share buttons.
- */
-
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave } from '@fortawesome/free-solid-svg-icons';
 
-import Lightbox from '../Lightbox';
+import { dbMethods } from '../../firebase/dbMethods';
+import { firebaseAuth } from '../../provider/AuthProvider';
 
 const SelectableDeck = ({
   toggleDeck,
@@ -19,9 +15,10 @@ const SelectableDeck = ({
   mine
 }) => {
   const history = useHistory();
+  const {user} = useContext(firebaseAuth)
 
   return (
-    <li 
+    <li style={{background: '#EAB2AE', marginBottom: 20, borderRadius: 10}}
       // className={selectedDecks?.includes(id) ? "selected" : ""}
       // onClick={(event) => {
       //   event.stopPropagation();
@@ -46,6 +43,7 @@ const SelectableDeck = ({
       <div className="button-row">
         {mine ? <button 
           className="btn btn-icon"
+          style={{color: 'white'}}
           onClick={(event) => {
             event.stopPropagation();
             setDeckToEdit();
@@ -57,11 +55,10 @@ const SelectableDeck = ({
         </button>
         : <button 
         className="btn btn-icon"
+        style={{color: 'white'}}
         onClick={(event) => {
           event.stopPropagation();
-          // setDeckToEdit();
-          // setSelectedDecks([id]);
-          // history.push("/app/edit");
+          dbMethods.saveDeck(user, deck)
         }}
       >
         <FontAwesomeIcon icon={faSave} /> 保存する
