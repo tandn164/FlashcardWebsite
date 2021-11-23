@@ -4,7 +4,7 @@ import { dbMethods } from '../../firebase/dbMethods';
 import { useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeading } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faHeading, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 import Accordion from '../Accordion';
 import CardCreator from './CardCreator';
@@ -23,10 +23,11 @@ const DeckEditor = ({
   const deck = deckToEdit || localDeck;
   const [title, setTitle] = useState(deck.title);
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [description, setDescription] = useState(deck.description);
 
   const updateDeck = (event) => {
     event.preventDefault();
-    dbMethods.updateDeck(user, deck.id, title)
+    dbMethods.updateDeck(user, deck.id, title, description)
     setDeckToEdit({...deckToEdit, title});
     setUpdateSuccess(true);
     setTimeout(() => setUpdateSuccess(false), 3000);
@@ -40,15 +41,15 @@ const DeckEditor = ({
   }
 
   return (
-    <>
+    <div style={{textAlign: 'left'}}>
       <PageHeading
-        title="Edit deck."
-        subtitle="Update the title and privacy status of your deck."
+        title="セットを編集する"
+        styles={{textAlign: 'left'}}
       />
       <form onSubmit={updateDeck}>
         <TextInput 
-          labelText="Title"
-          icon={<FontAwesomeIcon icon={faHeading} />}
+          labelText="題名"
+          icon={<FontAwesomeIcon icon={faPaperclip} />}
           id="title"
           name="title"
           value={title}
@@ -56,15 +57,25 @@ const DeckEditor = ({
           placeholder="New Deck"
           autocomplete="off"
         />
+        <TextInput 
+        labelText="説明"
+        icon={<FontAwesomeIcon icon={faBook} />}
+        id="description"
+        name="description"
+        value={description}
+        onChange={(event) => setDescription(event.target.value)}
+        autocomplete="off"
+        />
         <button
           className="btn btn-primary"
         >
-          {updateSuccess ? "Success!" : "Update" }
+          {updateSuccess ? "Success!" : "編集" }
         </button>
       </form>
       <div>
         <PageHeading 
           title="カード"
+          styles={{textAlign: 'left'}}
         />
         <Accordion
           deckId={selectedDecks[0]}
@@ -76,15 +87,16 @@ const DeckEditor = ({
       </div>
       <div>
         <PageHeading 
-          title="Delete deck."
+          title="デッキを削除する"
+          styles={{textAlign: 'left'}}
         />
         <form onSubmit={deleteDeck}>
           <button
             className="btn btn-warning"
-          >Delete</button>
+          >削除する</button>
         </form>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -6,9 +6,10 @@ import React from 'react';
 
 const PageHeading = ({
   title,
+  styles = {textAlign: 'center'}
 }) => {
   let titleElement = null;
-  titleElement=<h1 style={{textAlign: 'center'}}>{title}</h1>
+  titleElement=<h1 style={styles}>{title}</h1>
 
   return (
     <header className="page-heading">

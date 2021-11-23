@@ -14,7 +14,7 @@ import firebase from 'firebase';
 
 export const dbMethods = {
 
-  createDeck: (user, title) => {
+  createDeck: (user, title, description) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -26,6 +26,7 @@ export const dbMethods = {
       id: document.id,
       numCards: 0,
       title,
+      description,
       owner: user.uid,
     }
 
@@ -72,7 +73,7 @@ export const dbMethods = {
       return;
     }
     return db.collection('users').doc(user.uid).update({
-      save_decks: firebase.firestore.FieldValue.arrayRemove({id: deck.id, numCards: deck.numCards, owner: deck.owner, private: deck.private, title: deck.title})
+      save_decks: firebase.firestore.FieldValue.arrayRemove({id: deck.id, numCards: deck.numCards, owner: deck.owner, private: deck.private, title: deck.title, description: deck.description})
     })
     .then(() => {
       console.log("Updated deck with id: ", deck.id);
@@ -83,7 +84,7 @@ export const dbMethods = {
     });
   },
 
-  updateDeck: (user, deckId, title) => {
+  updateDeck: (user, deckId, title, description) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -91,6 +92,7 @@ export const dbMethods = {
 
     const updatedDeck = {
       title,
+      description
     }
 
     return db.collection('decks').doc(deckId).update(updatedDeck)

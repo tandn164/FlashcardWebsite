@@ -46,7 +46,8 @@ const Dashboard = ({
         </Route>
         <Route path="/app/create">
           <PageHeading
-            title="New Deck!"
+            title="新セット"
+            styles={{textAlign: 'left'}}
           />
           <DeckCreator />
         </Route>

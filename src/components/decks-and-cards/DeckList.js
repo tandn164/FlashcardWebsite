@@ -34,7 +34,7 @@ const DeckList = ({
           deck={deck}
           mine={deck.owner == user.uid}
           setDeckToEdit={() => {
-            setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private });
+            setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private, description: deck.description });
           }}
         />
       );}
