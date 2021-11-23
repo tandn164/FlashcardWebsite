@@ -73,7 +73,12 @@ export const dbMethods = {
       return;
     }
     return db.collection('users').doc(user.uid).update({
-      save_decks: firebase.firestore.FieldValue.arrayRemove({id: deck.id, numCards: deck.numCards, owner: deck.owner, private: deck.private, title: deck.title, description: deck.description})
+      save_decks: firebase.firestore.FieldValue.arrayRemove({
+        id: deck.id, 
+        numCards: deck.numCards, 
+        owner: deck.owner, 
+        title: deck.title, 
+        description: deck.description})
     })
     .then(() => {
       console.log("Updated deck with id: ", deck.id);
