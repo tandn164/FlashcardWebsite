@@ -54,7 +54,7 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       .then((userCredential) => {
         let _user = userCredential.user;
         db.collection('users').doc(_user.uid).set({
-          decks: []
+          save_decks: []
         });
         userCredential.user.updateProfile({displayName: username})
         setUserData(_user);

@@ -14,7 +14,7 @@ import firebase from 'firebase';
 
 export const dbMethods = {
 
-  createDeck: (user, title, isPublic) => {
+  createDeck: (user, title) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -27,7 +27,6 @@ export const dbMethods = {
       numCards: 0,
       title,
       owner: user.uid,
-      private: !isPublic,
     }
 
     document.set(newDeck)
@@ -50,7 +49,7 @@ export const dbMethods = {
     });
   },
 
-  updateDeck: (user, deckId, title, isPrivate) => {
+  updateDeck: (user, deckId, title) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -58,7 +57,6 @@ export const dbMethods = {
 
     const updatedDeck = {
       title,
-      private: isPrivate
     }
 
     return db.collection('decks').doc(deckId).update(updatedDeck)
@@ -145,4 +143,8 @@ export const dbMethods = {
       console.error("Error deleting card: ", err.message);
     });
   },
+
+  saveCard: () => {
+
+  }
 }

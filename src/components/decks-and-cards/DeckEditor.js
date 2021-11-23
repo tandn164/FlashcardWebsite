@@ -26,13 +26,12 @@ const DeckEditor = ({
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
   const [title, setTitle] = useState(deckToEdit.title);
-  const [isPublic, setIsPublic] = useState(!deckToEdit.private);
   const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const updateDeck = (event) => {
     event.preventDefault();
-    dbMethods.updateDeck(user, deckToEdit.id, title, !isPublic)
-    setDeckToEdit({...deckToEdit, title, private: !isPublic});
+    dbMethods.updateDeck(user, deckToEdit.id, title)
+    setDeckToEdit({...deckToEdit, title});
     setUpdateSuccess(true);
     setTimeout(() => setUpdateSuccess(false), 3000);
   }
@@ -46,10 +45,6 @@ const DeckEditor = ({
 
   return (
     <>
-      <Breadcrumb 
-        to="/app"
-        name="Dashboard"
-      />
       <PageHeading
         title="Edit deck."
         subtitle="Update the title and privacy status of your deck."
@@ -65,17 +60,6 @@ const DeckEditor = ({
           placeholder="New Deck"
           autocomplete="off"
         />
-        <input
-          id="public"
-          name="public"
-          type="checkbox"
-          checked={isPublic ? true : false}
-          onChange={() => setIsPublic(!isPublic)}
-        />
-        <label htmlFor="public">
-          <span></span>
-          Is this deck public and shareable?
-        </label>
         <button
           className="btn btn-primary"
         >

@@ -14,13 +14,12 @@ import TextInput from '../TextInput';
 
 const DeckCreator = () => {
   const [title, setTitle] = useState("");
-  const [isPublic, setIsPublic] = useState(false);
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
 
   const createDeck = (event) => {
     event.preventDefault();
-    dbMethods.createDeck(user, title, isPublic);
+    dbMethods.createDeck(user, title);
     history.push("/app");
   }
 
@@ -39,22 +38,6 @@ const DeckCreator = () => {
         placeholder="New Deck"
         autocomplete="off"
       />
-      <input
-        id="public"
-        name="public"
-        type="checkbox"
-        checked={isPublic ? true : false}
-        onChange={() => setIsPublic(!isPublic)}
-      />
-      <label htmlFor="public">
-        <span></span>
-        Is this deck public and shareable?
-      </label>
-      <button
-        className="btn btn-primary"
-      >
-        Create!
-      </button>
     </form>
   );
 }

@@ -18,6 +18,7 @@ import PageHeading from './PageHeading';
 const Dashboard = ({
   onClick,
   decks,
+  saveDecks,
   cards,
   selectedDecks,
   setSelectedDecks,
@@ -75,10 +76,7 @@ const Dashboard = ({
                 />
                 <div>
                   <DeckList
-                    decks={decks}
-                    selectedDecks={selectedDecks}
-                    setSelectedDecks={setSelectedDecks}
-                    setDeckToEdit={setDeckToEdit}
+                    decks={saveDecks}
                   />
                 </div>
                 <button

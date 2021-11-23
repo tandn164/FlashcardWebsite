@@ -20,6 +20,8 @@ import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
 import MobileMenu from './components/MobileMenu';
 import Footer from './components/Footer';
+import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
+import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 
 const fisherYatesShuffle = (array) => {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -41,6 +43,8 @@ const App = () => {
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
   const { decks } = useOnDecksSnapshot(user);
+  const { saveDecks } = useOnSavedDecksSnapshot(user);
+  const { allDecks } = useOnAllDecksSnapshot();
   const { cards } = useGetShuffledCards(user, selectedDecks);
 
   useEffect(() => {
@@ -139,6 +143,7 @@ const App = () => {
             <Dashboard 
               onClick={handleButtons}
               decks={decks}
+              saveDecks={saveDecks}
               cards={cards}
               selectedDecks={selectedDecks}
               setSelectedDecks={setSelectedDecks}
