@@ -45,7 +45,7 @@ const Nav = ({
         </Link>
         <div className="right-nav">
           <nav className="large-screen-only">
-            <Navlinks closeMenu={() => null}/>
+            <Navlinks closeMenu={() => null } userName={user.displayName}/>
           </nav>
           <button 
             className={btnClasses}
