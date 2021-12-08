@@ -2,17 +2,14 @@
  * Renders the toggleable card creator box.
  */
 
-import React, { useState, useContext } from 'react';
-import { firebaseAuth } from '../../provider/AuthProvider';
-import { dbMethods } from '../../firebase/dbMethods';
+import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
 const CardCreator = ({
-  deckId
+  onCreateCard
 }) => {
-  const { user } = useContext(firebaseAuth);
   const [isOpen, setIsOpen] = useState(false);
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
@@ -28,7 +25,7 @@ const CardCreator = ({
   const createCard = (event) => {
     event.preventDefault();
     console.log("Creating new card.");
-    dbMethods.createCard(user, deckId, front, back);
+    onCreateCard(front, back);
     setFront("");
     setBack("");
     setIsOpen(false);
@@ -65,6 +62,7 @@ const CardCreator = ({
             id="new-back"
             value={back}
             onChange={handleInput}
+            style={{outline: "none"}}
           />        
           <label htmlFor="new-back">Back</label>
         </div>

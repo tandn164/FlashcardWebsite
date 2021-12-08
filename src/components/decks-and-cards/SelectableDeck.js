@@ -46,7 +46,11 @@ const SelectableDeck = ({
       // role="checkbox"
       // aria-checked={selectedDecks?.includes(id) ? "true" : "false"}
     >
-      <div>
+      <div
+        onClick={() => {
+          history.push('/app/d/'+deck.id)
+        }}
+      >
         {/* <input
           name={id}
           type="checkbox"

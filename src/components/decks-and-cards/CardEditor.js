@@ -10,8 +10,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const CardEditor = ({
+  index,
   card,
-  onSubmit
+  onSubmit,
+  onUpdate,
+  onDelete
 }) => {
   const { user } = useContext(firebaseAuth);
   const [front, setFront] = useState("");
@@ -33,13 +36,13 @@ const CardEditor = ({
   const updateCard = (event) => {
     event.preventDefault();
     console.log("Card to update: ", card.id);
-    dbMethods.updateCard(user, card.id, front, back)
+    onUpdate(index, front, back)
     onSubmit();
   }
 
   const deleteCard = (event) => {
     event.preventDefault();
-    dbMethods.deleteCard(user, card.deckId, card.id);
+    onDelete(index)
   }
 
   return (

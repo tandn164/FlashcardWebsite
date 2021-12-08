@@ -8,9 +8,11 @@ import { firebaseAuth } from '../../provider/AuthProvider';
 import { useHistory } from 'react-router-dom';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faHeading, faNotesMedical, faPaperclip } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 
 import TextInput from '../TextInput';
+import PageHeading from '../PageHeading';
+import Accordion from '../Accordion';
 
 const DeckCreator = () => {
   const [title, setTitle] = useState("");
@@ -18,16 +20,25 @@ const DeckCreator = () => {
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
   const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [listCards, setListCards] = useState([])
 
-  const createDeck = (event) => {
-    event.preventDefault();
-    dbMethods.createDeck(user, title, description);
+  const createDeck = () => {
+    dbMethods.createDeck(user, title, description, listCards);
     setUpdateSuccess(true);
     history.push("/app");
   }
 
+  const onUpdateCards = (cards) => {
+    setListCards(cards)
+  }
+
+  const onUpdateDecks = (event) => {
+    createDeck();
+  }
+
   return (
-    <form 
+    <div style={{textAlign: 'left'}}>
+      <form 
       id="new-deck" 
       onSubmit={createDeck}
     >
@@ -49,10 +60,21 @@ const DeckCreator = () => {
         onChange={(event) => setDescription(event.target.value)}
         autocomplete="off"
       />
-      <button className="btn btn-primary">
+    </form>
+      <div>
+        <PageHeading 
+          title="カード"
+          styles={{textAlign: 'left'}}
+        />
+        <Accordion
+          listCards={listCards}
+          onCards={onUpdateCards}
+        />
+      </div>
+      <button className="btn btn-primary" onClick={onUpdateDecks}>
           {updateSuccess ? "Success!" : "作成" }
       </button>
-    </form>
+    </div>
   );
 }
 

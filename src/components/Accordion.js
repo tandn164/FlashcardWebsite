@@ -8,38 +8,76 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
 import CardEditor from './decks-and-cards/CardEditor';
+import CardCreator from './decks-and-cards/CardCreator';
 
 const Accordion = ({
-  cards
+  listCards,
+  onCards,
 }) => {
-  const [card, setCard] = useState("");
+  const [cards, setCards] = useState(listCards || []);
+  const [card, setCard] = useState(-1);
   const [cardEditorElements, setCardEditorElements] = useState([]);
 
   const handleClick = (event) => {
-    setCard(prev => prev === event.target.value ? "" : event.target.value);
+    console.log(event.target.value)
+    setCard(prev => prev === event.target.value ? -1 : event.target.value);
+  }
+
+  const onCreateCard = (front, back) => {
+    let newCard = {front: front, back: back}
+    cards.push(newCard)
+    setCards(cards)
+    onCards(cards)
+    updateElements()
+  }
+
+  const onDeleteCard = (index) => {
+    cards.splice(index, 1);
+    setCards(cards)
+    onCards(cards)
+    updateElements()
+  }
+
+  const onUpdateCard = (index, front, back) => {
+    cards[index] = {front: front, back: back};
+    setCards(cards)
+    onCards(cards)
+    updateElements()
   }
 
   useEffect(() => {
-    const elements = cards.map(ele => {
-      let classes = ele.id === card ? "btn btn-tertiary highlighted" : "btn btn-tertiary";
+    setCards(listCards)
+  },[listCards])
+
+  useEffect(() => {
+    updateElements()
+  }, [card, cards]);
+
+  const updateElements = () => {
+    const elements = cards.map( (ele, index) => {
+      let classes = index === card ? "btn btn-tertiary highlighted" : "btn btn-tertiary";
+      console.log(index)
       return (
-        <React.Fragment key={ele.id} >
+        <React.Fragment key={index} >
           <button 
             className={classes}
-            value={ele.id}
+            value={index}
             onClick={handleClick}
           >
             <span className="truncate">"{ele.front}"</span> 
-            {card === ele.id ?
+            {card === `${index}` ?
               <FontAwesomeIcon icon={faAngleUp} />
             :
               <FontAwesomeIcon icon={faAngleDown} />
             }
           </button>
-          {card === ele.id && 
+          {card === `${index}` && 
             <CardEditor
+              index={index}
               card={ele}
               onSubmit={() => setCard("")}
+              onDelete={onDeleteCard}
+              onUpdate={onUpdateCard}
             />
           }
         </React.Fragment>
@@ -47,11 +85,14 @@ const Accordion = ({
     })
 
     setCardEditorElements(elements);
-  }, [card, cards]);
+  }
 
   return (
     <>
       {cardEditorElements}
+      <CardCreator
+        onCreateCard={onCreateCard}
+      />
     </>
   );
 }

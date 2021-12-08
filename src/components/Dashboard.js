@@ -16,18 +16,31 @@ import DeckList from './decks-and-cards/DeckList';
 import PageHeading from './PageHeading';
 import SavedDecks from './SavedDecks';
 import CreatedDecks from './CreatedDecks';
+import Deck from './decks-and-cards/Deck';
 
 const Dashboard = ({
   onClick,
   decks,
   saveDecks,
   cards,
-  selectedDecks,
-  setSelectedDecks,
 }) => {
   const [deckToEdit, setDeckToEdit] = useState(null);
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
+
+  const handleButtons = (event) => {
+    switch (event.target.name) {
+      case "exit":
+        if (user) {
+          history.push("/app");
+          return;
+        }
+        history.push("/");
+        return;
+      default:
+        return;
+    }
+  }
 
   if (!user) {
     history.push("/log-in");
@@ -38,7 +51,6 @@ const Dashboard = ({
       <Switch>
         <Route path="/app/edit">
           <DeckEditor
-            selectedDecks={selectedDecks}
             deckToEdit={deckToEdit}
             setDeckToEdit={setDeckToEdit}
             cards={cards}
@@ -60,7 +72,11 @@ const Dashboard = ({
           <CreatedDecks
             decks={decks}
             cards={cards}
-            selectedDecks={selectedDecks}
+          />
+        </Route>
+        <Route path="/app/d/:hash">
+          <Deck 
+            onClick={handleButtons}
           />
         </Route>
         <Route path="/app">

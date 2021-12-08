@@ -8,8 +8,6 @@ import DeckEditor from './decks-and-cards/DeckEditor';
 
 const Home = ({
   allDecks,
-  selectedDecks,
-  cards
 }) => {
   const { user } = useContext(firebaseAuth);
   const [deckToEdit1, setDeckToEdit] = useState(null);
@@ -22,9 +20,7 @@ const Home = ({
       <Route path="/app-edit" >
         <DeckEditor
           deckToEdit={deckToEdit1}
-          selectedDecks={selectedDecks}
           setDeckToEdit={setDeckToEdit}
-          cards={cards}
         />
       </Route>
       <Route path="/">

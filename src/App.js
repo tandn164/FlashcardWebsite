@@ -8,7 +8,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { firebaseAuth } from './provider/AuthProvider';
 import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
-import useGetShuffledCards from './hooks/useGetShuffledCards';
 import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
 import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 
@@ -21,7 +20,6 @@ import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
 import MobileMenu from './components/MobileMenu';
-import Footer from './components/Footer';
 
 const fisherYatesShuffle = (array) => {
   var currentIndex = array.length, temporaryValue, randomIndex;
@@ -38,51 +36,28 @@ const fisherYatesShuffle = (array) => {
 const App = () => {
   const [selectedDecks, setSelectedDecks] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [shuffledCards, setShuffledCards] = useState([]);
 
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
   const { decks } = useOnDecksSnapshot(user);
   const { saveDecks } = useOnSavedDecksSnapshot(user);
   const { allDecks } = useOnAllDecksSnapshot();
-  const { cards } = useGetShuffledCards(user, selectedDecks);
-
-  useEffect(() => {
-    let _cards = [];
-    shuffledCards.forEach(card => {
-      cards.forEach((updatedCard) => {
-        if (updatedCard.id === card.id) {
-          _cards.push(Object.assign({}, updatedCard)); 
-        }
-      })
-    });
-    setShuffledCards(_cards);
-  }, [cards]);
 
   useEffect(() => {
     if (user) return;
-    setShuffledCards([]);
     setSelectedDecks([]);
   }, [user]);
 
   const handleButtons = (event) => {
     switch (event.target.name) {
       case "exit":
-        setShuffledCards([]);
         if (user) {
           history.push("/app");
           return;
         }
         history.push("/");
         return;
-
-      case "shuffle":
-        if (selectedDecks.length === 0) return;
-        const randomized_cards = fisherYatesShuffle(cards);
-        setShuffledCards(randomized_cards);
-        history.push("/app/shuffle");
-        return;
-
+  
       case "toggle-menu":
         setIsMenuOpen(prev => !prev);
         return;
@@ -109,7 +84,6 @@ const App = () => {
       <Switch>
         <Route path="/log-in">
           <Login />
-          <Footer />
         </Route>
         <Route path="/log-out">
           <main>
@@ -118,23 +92,19 @@ const App = () => {
         </Route>
         <Route path="/sign-up">
           <Signup />
-          <Footer />
         </Route>
         <Route path="/my-account">
           <main>
             <MyAccount />
-            <Footer />
           </main>
         </Route>
         <Route path="/app/shuffle">
           <Deck 
-            shuffledCards={shuffledCards}
             onClick={handleButtons}
           />
         </Route>
         <Route path="/app/d/:hash">
           <Deck 
-            shuffledCards={shuffledCards}
             onClick={handleButtons}
           />
         </Route>
@@ -144,22 +114,18 @@ const App = () => {
               onClick={handleButtons}
               decks={decks}
               saveDecks={saveDecks}
-              cards={cards}
               selectedDecks={selectedDecks}
               setSelectedDecks={setSelectedDecks}
             />
-            <Footer />
           </main>
         </Route>
         <Route path="/">
           <main>
             <Home 
-              cards={cards} 
               allDecks={allDecks} 
               setSelectedDecks={setSelectedDecks} 
               selectedDecks={selectedDecks}
               />
-            <Footer />
           </main>
         </Route>
       </Switch>

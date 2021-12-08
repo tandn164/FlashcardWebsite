@@ -14,7 +14,7 @@ import firebase from 'firebase';
 
 export const dbMethods = {
 
-  createDeck: (user, title, description) => {
+  createDeck: (user, title, description, cards) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -24,10 +24,11 @@ export const dbMethods = {
 
     const newDeck = {
       id: document.id,
-      numCards: 0,
+      numCards: cards.length,
       title,
       description,
       owner: user.uid,
+      cards: cards
     }
 
     document.set(newDeck)
@@ -89,7 +90,7 @@ export const dbMethods = {
     });
   },
 
-  updateDeck: (user, deckId, title, description) => {
+  updateDeck: (user, deckId, title, description, cards) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -97,7 +98,8 @@ export const dbMethods = {
 
     const updatedDeck = {
       title,
-      description
+      description,
+      cards
     }
 
     return db.collection('decks').doc(deckId).update(updatedDeck)
@@ -111,81 +113,81 @@ export const dbMethods = {
     });
   },
 
-  createCard: (user, deckId, front, back) => {
-    if (!user) {
-      console.log("No user selected.");
-      return;
-    }
+  // createCard: (user, deckId, front, back) => {
+  //   if (!user) {
+  //     console.log("No user selected.");
+  //     return;
+  //   }
 
-    const document = db.collection('cards').doc();
+  //   const document = db.collection('cards').doc();
 
-    const newCard = {
-      id: document.id,
-      deckId,
-      owner: user.uid,
-      front,
-      back,
-    }
+  //   const newCard = {
+  //     id: document.id,
+  //     deckId,
+  //     owner: user.uid,
+  //     front,
+  //     back,
+  //   }
 
-    document.set(newCard)
-    .then(res => {
-      console.log("New card created.")
-      db.collection('decks').doc(deckId).update({
-        numCards: firebase.firestore.FieldValue.increment(1)
-      })
-      .catch(err => {
-        console.error("Error increasing card count.");
-      })
-    })
-    .catch(err => {
-      console.error("Error creating card: ", err.message);
-    });
-  },
+  //   document.set(newCard)
+  //   .then(res => {
+  //     console.log("New card created.")
+  //     db.collection('decks').doc(deckId).update({
+  //       numCards: firebase.firestore.FieldValue.increment(1)
+  //     })
+  //     .catch(err => {
+  //       console.error("Error increasing card count.");
+  //     })
+  //   })
+  //   .catch(err => {
+  //     console.error("Error creating card: ", err.message);
+  //   });
+  // },
 
-  updateCard: (user, cardId, front, back) => {
-    if (!user) {
-      console.log("No user selected.");
-      return;
-    }
+  // updateCard: (user, cardId, front, back) => {
+  //   if (!user) {
+  //     console.log("No user selected.");
+  //     return;
+  //   }
 
-    const updatedCard = {
-      front,
-      back
-    }
-    console.log("CardId: ", cardId);
+  //   const updatedCard = {
+  //     front,
+  //     back
+  //   }
+  //   console.log("CardId: ", cardId);
 
-    db.collection('cards').doc(cardId).update(updatedCard)
-    .then(res => {
-      console.log("Updated card with id: ", cardId);
-    })
-    .catch(err => {
-      console.error("Error updating card: ", err.message);
-    })
-  },
+  //   db.collection('cards').doc(cardId).update(updatedCard)
+  //   .then(res => {
+  //     console.log("Updated card with id: ", cardId);
+  //   })
+  //   .catch(err => {
+  //     console.error("Error updating card: ", err.message);
+  //   })
+  // },
 
-  deleteCard: (user, deckId, cardId) => {
-    if (!user) {
-      console.log("No user selected.");
-      return;
-    }
+  // deleteCard: (user, deckId, cardId) => {
+  //   if (!user) {
+  //     console.log("No user selected.");
+  //     return;
+  //   }
 
-    db.collection('cards').doc(cardId).delete()
-    .then(res => {
-      console.log("Card successfully deleted.")
-      db.collection('decks').doc(deckId).update({
-        numCards: firebase.firestore.FieldValue.increment(-1)
-      })
-      .catch(err => {
-        console.error("Error decreasing card count.");
-      })
-    })
+  //   db.collection('cards').doc(cardId).delete()
+  //   .then(res => {
+  //     console.log("Card successfully deleted.")
+  //     db.collection('decks').doc(deckId).update({
+  //       numCards: firebase.firestore.FieldValue.increment(-1)
+  //     })
+  //     .catch(err => {
+  //       console.error("Error decreasing card count.");
+  //     })
+  //   })
     
-    .catch(err => {
-      console.error("Error deleting card: ", err.message);
-    });
-  },
+  //   .catch(err => {
+  //     console.error("Error deleting card: ", err.message);
+  //   });
+  // },
 
-  saveCard: () => {
+  // saveCard: () => {
 
-  }
+  // }
 }

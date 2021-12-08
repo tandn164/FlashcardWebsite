@@ -16,7 +16,6 @@ import FlippableCard from './FlippableCard';
 import Spinner from '../Spinner';
 
 const Deck = ({ 
-  shuffledCards,
   onClick,
 }) => {
   const [cards, setCards] = useState([]);
@@ -33,28 +32,29 @@ const Deck = ({
     setHashCards(null);
     setCards(null);
 
+    console.log(hash)
     if (hash === undefined) return;
-    if (shuffledCards.length > 0) return;
 
     const db = firebase.firestore();
 
     db.collection('decks').doc(hash).get()
     .then(snapshot => {
-      if (snapshot.data().private) {
-        setCanView(false);
-        setIsLoaded(true);
-      }
+      // if (snapshot.data().private) {
+      //   setCanView(false);
+      //   setIsLoaded(true);
+      // }
+      setIsLoaded(true);
     })
     .catch(error => {
       setIsLoaded(true);
       console.log("Error: ", error.message)
     })
 
-    let ref = db.collection('cards');
-    ref.where("deckId", "==", hash).get()
+    let ref = db.collection('decks').doc(hash);
+    ref.get()
       .then(snapshot => {
         let arr = [];
-        snapshot.forEach(card => arr.push(card.data()));
+        snapshot.data().cards?.forEach(item => arr.push(item));
         setHashCards(arr);
       })
       .catch(error => console.log("Error: ", error.message))
@@ -68,7 +68,7 @@ const Deck = ({
     if (hashCards != null) {
       _cards = hashCards;
     } else {
-      _cards = shuffledCards;
+      _cards = [];
     }
 
     if (_cards.length > 0) {
@@ -89,7 +89,7 @@ const Deck = ({
       setIsLoaded(true);
     }
 
-    }, [shuffledCards, isCardFlipped, onClick, hashCards]
+    }, [isCardFlipped, onClick, hashCards]
   );
 
   if (!isLoaded) return (

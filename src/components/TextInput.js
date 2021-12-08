@@ -40,7 +40,7 @@ const TextInput = ({
           id={id}
           value={value}
           onChange={onChange}
-          
+          style={{outline: "none"}}
           autoComplete={autocomplete}
         >
         </input>

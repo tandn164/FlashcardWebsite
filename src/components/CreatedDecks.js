@@ -17,7 +17,6 @@
  const CreatedDecks = ({
    decks,
    cards,
-   selectedDecks,
  }) => {
    const [deckToEdit, setDeckToEdit] = useState(null);
    const { user } = useContext(firebaseAuth);
@@ -32,7 +31,6 @@
          <Switch>
            <Route path="/app/edit">
              <DeckEditor
-               selectedDecks={selectedDecks}
                deckToEdit={deckToEdit}
                setDeckToEdit={setDeckToEdit}
                cards={cards}
