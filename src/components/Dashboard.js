@@ -17,6 +17,7 @@ import PageHeading from './PageHeading';
 import SavedDecks from './SavedDecks';
 import CreatedDecks from './CreatedDecks';
 import Deck from './decks-and-cards/Deck';
+import Test from './decks-and-cards/Test';
 
 const Dashboard = ({
   onClick,
@@ -76,6 +77,11 @@ const Dashboard = ({
         </Route>
         <Route path="/app/d/:hash">
           <Deck 
+            onClick={handleButtons}
+          />
+        </Route>
+        <Route path="/app/test/:hash">
+          <Test 
             onClick={handleButtons}
           />
         </Route>
@@ -140,18 +146,6 @@ const Dashboard = ({
                 style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
               >
                 <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 新作</>
-              </button>
-              <button
-                onClick={onClick}
-                style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
-              >
-                <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 復習</>
-              </button>
-              <button
-                onClick={onClick}
-                style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30 }}
-              >
-                <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 履歴</>
               </button>
             </div>
           </div>
