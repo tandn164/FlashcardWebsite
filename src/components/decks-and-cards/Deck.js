@@ -24,9 +24,9 @@ const Deck = ({
   const [canView, setCanView] = useState(true);
   const [isLoaded, setIsLoaded] = useState(false);
   const { hash } = useParams();
+  const [shuffle, setShuffle] = useState(0);
+  const [cardShuffle, setCardShuffle] = useState([]);
 
-  /* Gets the deck and its based on the hash in the URL,
-     and checks whether it is private or not. */
   useEffect(() => {
     setIsLoaded(false);
     setHashCards(null);
@@ -39,10 +39,6 @@ const Deck = ({
 
     db.collection('decks').doc(hash).get()
     .then(snapshot => {
-      // if (snapshot.data().private) {
-      //   setCanView(false);
-      //   setIsLoaded(true);
-      // }
       setIsLoaded(true);
     })
     .catch(error => {
@@ -60,7 +56,6 @@ const Deck = ({
       .catch(error => console.log("Error: ", error.message))
   }, [hash]);
 
-  /* Generates an array of FlippableCards for each card in the deck. */
   useEffect(() => {
     setIsLoaded(false);
     let _cards = [];
@@ -73,6 +68,20 @@ const Deck = ({
 
     if (_cards.length > 0) {
       setCards(_cards.map((ele) => {
+        return (
+          <FlippableCard 
+            key={ele.id}
+            frontTitle="Front"
+            backTitle="Back"
+            frontText={ele.front}
+            backText={ele.back}
+            onClick={onClick}
+            isFlipped={isCardFlipped}
+            setIsFlipped={setIsCardFlipped}
+          />
+        )
+      }));
+      setCardShuffle(_cards.map((ele) => {
         return (
           <FlippableCard 
             key={ele.id}
@@ -116,16 +125,67 @@ const Deck = ({
     setIsCardFlipped(false);
   }
 
+  const shuffleCard = (array) => {
+    let currentIndex = array.length,  randomIndex;
+  
+    while (currentIndex != 0) {
+  
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+  
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+  
+    return array;
+  } 
+
   return (
-    <Carousel 
-      items={cards}
-      leftButtonText={<FontAwesomeIcon icon={faAngleLeft} />}
-      rightButtonText={<FontAwesomeIcon icon={faAngleRight} />}
-      animTime={.3}
-      previousCallback={slideCallback}
-      nextCallback={slideCallback}
-      showButtons={true}
-    />
+    <div style={{display: 'flex'}}>
+      <Carousel 
+            items={shuffle != 0 ? cardShuffle : cards}
+            leftButtonText={<FontAwesomeIcon icon={faAngleLeft} />}
+            rightButtonText={<FontAwesomeIcon icon={faAngleRight} />}
+            animTime={.3}
+            previousCallback={slideCallback}
+            nextCallback={slideCallback}
+            showButtons={true}
+          />
+      <div style={{ 
+        background: shuffle == 0 ? 'wheat' : 'green', 
+        height: 30, 
+        width: 100, 
+        textAlign: 'center', 
+        position: 'absolute', 
+        zIndex: 1 , 
+        color: shuffle == 0 ? 'black' : 'white',
+        marginTop: 150, 
+        right: 95,
+        lineHeight: 2,
+        verticalAlign: 'center',
+        borderRadius: 15,
+        }} onClick={(event) => {
+          setShuffle(0)
+        }}>ソート済み</div>
+      <div style={{ 
+        background: shuffle != 0 ? 'wheat' : 'green', 
+        height: 30, 
+        width: 100, 
+        textAlign: 'center', 
+        position: 'absolute', 
+        zIndex: 1 , 
+        color: shuffle != 0 ? 'black' : 'white',
+        marginTop: 100, 
+        right: 95,
+        lineHeight: 2,
+        verticalAlign: 'center',
+        borderRadius: 15,
+        }} onClick={(event) => {
+          setCardShuffle(shuffleCard(cardShuffle))
+          setShuffle(prev => prev + 1)
+        }}>シャッフル</div>
+    </div>
+    
   );
 }
 

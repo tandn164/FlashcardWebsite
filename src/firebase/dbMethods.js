@@ -79,7 +79,9 @@ export const dbMethods = {
         numCards: deck.numCards, 
         owner: deck.owner, 
         title: deck.title, 
-        description: deck.description})
+        description: deck.description,
+        cards: deck.cards
+      })
     })
     .then(() => {
       console.log("Updated deck with id: ", deck.id);
@@ -99,7 +101,8 @@ export const dbMethods = {
     const updatedDeck = {
       title,
       description,
-      cards
+      cards,
+      numCards: cards.length,
     }
 
     return db.collection('decks').doc(deckId).update(updatedDeck)
@@ -112,82 +115,4 @@ export const dbMethods = {
       
     });
   },
-
-  // createCard: (user, deckId, front, back) => {
-  //   if (!user) {
-  //     console.log("No user selected.");
-  //     return;
-  //   }
-
-  //   const document = db.collection('cards').doc();
-
-  //   const newCard = {
-  //     id: document.id,
-  //     deckId,
-  //     owner: user.uid,
-  //     front,
-  //     back,
-  //   }
-
-  //   document.set(newCard)
-  //   .then(res => {
-  //     console.log("New card created.")
-  //     db.collection('decks').doc(deckId).update({
-  //       numCards: firebase.firestore.FieldValue.increment(1)
-  //     })
-  //     .catch(err => {
-  //       console.error("Error increasing card count.");
-  //     })
-  //   })
-  //   .catch(err => {
-  //     console.error("Error creating card: ", err.message);
-  //   });
-  // },
-
-  // updateCard: (user, cardId, front, back) => {
-  //   if (!user) {
-  //     console.log("No user selected.");
-  //     return;
-  //   }
-
-  //   const updatedCard = {
-  //     front,
-  //     back
-  //   }
-  //   console.log("CardId: ", cardId);
-
-  //   db.collection('cards').doc(cardId).update(updatedCard)
-  //   .then(res => {
-  //     console.log("Updated card with id: ", cardId);
-  //   })
-  //   .catch(err => {
-  //     console.error("Error updating card: ", err.message);
-  //   })
-  // },
-
-  // deleteCard: (user, deckId, cardId) => {
-  //   if (!user) {
-  //     console.log("No user selected.");
-  //     return;
-  //   }
-
-  //   db.collection('cards').doc(cardId).delete()
-  //   .then(res => {
-  //     console.log("Card successfully deleted.")
-  //     db.collection('decks').doc(deckId).update({
-  //       numCards: firebase.firestore.FieldValue.increment(-1)
-  //     })
-  //     .catch(err => {
-  //       console.error("Error decreasing card count.");
-  //     })
-  //   })
-    
-  //   .catch(err => {
-  //     console.error("Error deleting card: ", err.message);
-  //   });
-  // },
-
-  // saveCard: () => {
-
-  // }
 }

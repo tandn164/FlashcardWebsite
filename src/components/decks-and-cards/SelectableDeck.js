@@ -82,6 +82,7 @@ const SelectableDeck = ({
         onClick={(event) => {
           event.stopPropagation();
           if (saved) {
+            console.log(deck)
             dbMethods.unsaveDeck(user, deck)
             setSaved(false)
           } else {

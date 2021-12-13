@@ -37,48 +37,19 @@ const Carousel = ({
       );
     });
 
-    if (items.length > 0) {
-      let firstItem = React.cloneElement(modifiedItems[0], { key: "first" });
-      let lastItem = React.cloneElement(modifiedItems[modifiedItems.length - 1], { key: "last" });
-      modifiedItems.unshift(lastItem);
-      modifiedItems.push(firstItem);
-    }
-
     setCarouselItems(modifiedItems);
   }, [items]);
 
-  // The wrap-around functionality.
-  useEffect(() => {
-    if (carouselItems.length < 3) return;
-
-    if (index === 0 || index === carouselItems.length - 1) {
-      setTimeout(() => {
-        carousel.current.style.transition = "margin 0s cubic-bezier(.645,.045,.355,1)";
-        
-        if (index === 0) {
-          setIndex(carouselItems.length - 2);
-        } else if (index === carouselItems.length - 1) {
-          setIndex(1);
-        }
-      }, animTime * 1000);
-    }
-
-    if (index === 1 || index === carouselItems.length - 2) {
-      setTimeout(() => {
-        carousel.current.style.transition = "margin " + animTime + "s cubic-bezier(.645,.045,.355,1)";
-      }, WRAP_BUFFER);
-    }
-  }, [index, carouselItems, animTime]);
-
   const handleClick = (event) => {
     if (!canSlide) return;
-
     if (event.target.name === "right") {
+      if (index == carouselItems.length - 1) { return }
       setIndex(idx => idx + 1);
       if (nextCallback !== undefined) {
         nextCallback(index-1);
       }
     } else if (event.target.name === "left") {
+      if (index == 0) { return }
       setIndex(idx => idx - 1);
       if (previousCallback !== undefined) {
         previousCallback(index-1);
@@ -104,18 +75,18 @@ const Carousel = ({
       <div className="spacer"></div>
       {showButtons &&
         <>
-          <button 
+          {index > 0 && <button 
             className="btn-carousel left"
             onClick={(event) => handleClick(event)}
             name="left"
             disabled={!canSlide}
-          >{leftButtonText}</button>
-          <button 
+          >{leftButtonText}</button>}
+          {index < carouselItems.length - 1 && <button 
             className="btn-carousel right"
             onClick={(event) => handleClick(event)}
             name="right"
             disabled={!canSlide}
-          >{rightButtonText}</button>
+          >{rightButtonText}</button>}
         </>
       }
     </div>
