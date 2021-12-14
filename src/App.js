@@ -76,11 +76,6 @@ const App = () => {
         onClick={handleButtons}
         isMenuOpen={isMenuOpen}
       />
-      <MobileMenu 
-        isOpen={isMenuOpen}
-        setIsOpen={setIsMenuOpen}
-        handleButtons={handleButtons}
-      />
       <Switch>
         <Route path="/log-in">
           <Login />
