@@ -24,7 +24,7 @@ const Navlinks = ({ closeMenu, userName }) => {
 
   
   return (
-    <div style={{position: 'relative'}}>
+    <div style={{position: 'relative', display: 'flex'}}>
       <div className="avatar-btn" style={{backgroundColor: `${bgColor}`}}>
         <div className="name">{firstChar}</div>
       </div>
