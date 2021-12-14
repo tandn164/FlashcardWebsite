@@ -50,7 +50,6 @@ const UpdateProfile = ({
         <TextInput 
           labelText="ユーザー名"
           icon={<FontAwesomeIcon icon={faUser} />}
-          type="username"
           id="username"
           name="username"
           value={inputs.username}
