@@ -40,9 +40,16 @@ const Nav = ({
   return (
     <header className={navClasses} style={{background: '#526CC6'}}>
       <div className="navbar-inner">
-        <Link to="/" className="logo">
-          Flash Cards
+        <div className="logo">
+        <Link to="/" className="logo" >
+        ホーム
         </Link>
+        <div style={{height: 30, width: 2, backgroundColor: 'black', marginLeft: 20, marginRight: 20}}></div>
+        <Link to="/app" className="logo">
+          私のフラッシュカード
+        </Link>
+          </div>
+        
         <div className="right-nav">
           <nav className="large-screen-only">
             <Navlinks closeMenu={() => null } userName={user.displayName}/>

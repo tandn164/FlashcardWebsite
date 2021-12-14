@@ -67,11 +67,6 @@ const MyAccount = () => {
                 </Link>
               </div>
               <div className="account-data">
-                <Link to="/log-out" className="btn btn-tertiary">
-                  <span>ログアウト</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
-                </Link>
-              </div>
-              <div className="account-data">
                 <Link to="/my-account/delete-account" className="btn btn-warning">
                   <FontAwesomeIcon icon={faTrash} />&nbsp;&nbsp;&nbsp;アカウントを削除する
                 </Link>
