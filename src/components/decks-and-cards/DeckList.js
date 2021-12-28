@@ -6,35 +6,7 @@ import SelectableDeck from './SelectableDeck';
 function Items({ currentItems, user, setDeckToEdit}) {
   return (
     <React.Fragment>
-      <div>
-      {currentItems && 
-        <div className="deck-list">
-        <ul>
-          {currentItems.length > 0 ? 
-            currentItems.map((deck, index) => {
-              return (
-                <SelectableDeck 
-                  key={index}
-                  // toggleDeck={toggleDeck}
-                  // selectedDecks={selectedDecks}
-                  length={currentItems.numCards}
-                  // setSelectedDecks={setSelectedDecks}
-                  deck={deck}
-                  mine={user && currentItems.owner == currentItems.uid}
-                  setDeckToEdit={() => {
-                    setDeckToEdit({ id: currentItems.id, title: currentItems.title, private: currentItems.private, description: currentItems.description });
-                  }}
-                />
-              );}
-            )
-          :
-            <p>セットがありません。 作成して開始してください！</p>
-          }
-        </ul>
-      </div>
-      }
-      </div>
-    
+        {currentItems}
     </React.Fragment>
   );
 }
@@ -130,14 +102,14 @@ const DeckList = ({
 
   return (
     <div className="deck-list">
-      {/* <ul>
+      <ul>
         {deckList.length > 0 ? 
-          deckList
+          <PaginatedItems itemsPerPage={4} decks={deckList} user={user} setDeckToEdit={setDeckToEdit}/>
         :
           <p>セットがありません。 作成して開始してください！</p>
         }
-      </ul> */}
-      <PaginatedItems itemsPerPage={4} decks={decks} user={user} setDeckToEdit={setDeckToEdit}/>
+      </ul>
+      
     </div>
   );
 }
