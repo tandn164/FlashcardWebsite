@@ -63,6 +63,9 @@ const SelectableDeck = ({
           
         </label>
       </div>
+      <div>
+      <span>保存する人の数:&nbsp;</span><span style={{fontWeight: '700'}}>{deck.saveCount}</span>
+      </div>
       <div className="button-row">
         {mine ? <button 
           className="btn btn-icon"
