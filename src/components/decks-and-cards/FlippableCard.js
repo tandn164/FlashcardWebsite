@@ -2,12 +2,13 @@
  * Displays a flash card and its content.
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faReply, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import Header from '../Header';
 import CardContent from './CardContent';
+import { storage } from '../../firebase/firebaseIndex';
 
 const FlippableCard = ({
   onClick,
@@ -17,6 +18,7 @@ const FlippableCard = ({
   backText,
   isFlipped,
   setIsFlipped,
+  imageRef,
 }) => {
   const header = (
     <Header title={frontTitle}>
@@ -43,13 +45,24 @@ const FlippableCard = ({
       </button>
     </footer>
   );
+
+  const [imageUrl, setImageUrl] = useState(null);
+
+  useState(() => {
+    if (imageRef) {
+      console.log(imageRef);
+      storage.ref(imageRef).getDownloadURL().then((downloadURL) => {
+          setImageUrl(downloadURL)
+      });
+  }
+  },[imageRef])
  
   return (
     <div className={isFlipped ? "flippable flipped" : "flippable"}>
       <div className="flippable__inner">
         <div className="flippable__content front">
           {header}
-            <CardContent text={frontText} />
+            <CardContent text={frontText} imageUrl={imageUrl} />
           {footer}
         </div>
         <div className="flippable__content back">

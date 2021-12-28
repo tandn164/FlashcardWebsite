@@ -82,6 +82,7 @@ const Deck = ({
             onClick={onClick}
             isFlipped={isCardFlipped}
             setIsFlipped={setIsCardFlipped}
+            imageRef={ele.imageRef}
           />
         )
       }));
@@ -96,6 +97,7 @@ const Deck = ({
             onClick={onClick}
             isFlipped={isCardFlipped}
             setIsFlipped={setIsCardFlipped}
+            imageRef={ele.imageRef}
           />
         )
       }));
