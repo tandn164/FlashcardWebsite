@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
+import UploadAndDisplayImage from './UploadAndDisplayImage';
 
 const CardCreator = ({
   onCreateCard
@@ -13,6 +14,7 @@ const CardCreator = ({
   const [isOpen, setIsOpen] = useState(false);
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
+  const [image, setImage] = useState(null);
 
   const handleInput = (event) => {
     if (event.target.name === "front") {
@@ -25,9 +27,10 @@ const CardCreator = ({
   const createCard = (event) => {
     event.preventDefault();
     console.log("Creating new card.");
-    onCreateCard(front, back);
+    onCreateCard(front, back, image);
     setFront("");
     setBack("");
+    setImage(null);
     setIsOpen(false);
   }
 
@@ -66,6 +69,9 @@ const CardCreator = ({
           />        
           <label htmlFor="new-back">Back</label>
         </div>
+        <UploadAndDisplayImage onSetImage={(image)=>{
+            setImage(image);
+        }} imageRef={image}/>
         <button className="btn">Create</button>
       </form>
     </>

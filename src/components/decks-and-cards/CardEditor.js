@@ -8,6 +8,7 @@ import { firebaseAuth } from '../../provider/AuthProvider';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import UploadAndDisplayImage from './UploadAndDisplayImage';
 
 const CardEditor = ({
   index,
@@ -19,10 +20,12 @@ const CardEditor = ({
   const { user } = useContext(firebaseAuth);
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     setFront(card.front);
     setBack(card.back);
+    setImage(card.imageRef);
   }, [card])
 
   const handleInput = (event) => {
@@ -36,7 +39,7 @@ const CardEditor = ({
   const updateCard = (event) => {
     event.preventDefault();
     console.log("Card to update: ", card.id);
-    onUpdate(index, front, back)
+    onUpdate(index, front, back, image)
     onSubmit();
   }
 
@@ -65,6 +68,9 @@ const CardEditor = ({
         />
         <label htmlFor={card.id + "-back"}>Back</label>
       </div>
+      <UploadAndDisplayImage onSetImage={(image)=>{
+        setImage(image);
+      }} imageRef={image}/>
       <button className="btn">Update</button>
       <button className="btn btn-warning"
         onClick={deleteCard}

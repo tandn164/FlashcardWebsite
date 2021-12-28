@@ -23,8 +23,9 @@ const Accordion = ({
     setCard(prev => prev === event.target.value ? -1 : event.target.value);
   }
 
-  const onCreateCard = (front, back) => {
-    let newCard = {front: front, back: back}
+  const onCreateCard = (front, back, imageRef) => {
+    let newCard = {front: front, back: back, imageRef: imageRef}
+    console.log(28888, newCard);
     cards.push(newCard)
     setCards(cards)
     onCards(cards)
@@ -38,8 +39,8 @@ const Accordion = ({
     updateElements()
   }
 
-  const onUpdateCard = (index, front, back) => {
-    cards[index] = {front: front, back: back};
+  const onUpdateCard = (index, front, back, imageRef) => {
+    cards[index] = {front: front, back: back, imageRef: imageRef};
     setCards(cards)
     onCards(cards)
     updateElements()
@@ -57,6 +58,7 @@ const Accordion = ({
     const elements = cards.map( (ele, index) => {
       let classes = index === card ? "btn btn-tertiary highlighted" : "btn btn-tertiary";
       console.log(index)
+      console.log(ele);
       return (
         <React.Fragment key={index} >
           <button 
