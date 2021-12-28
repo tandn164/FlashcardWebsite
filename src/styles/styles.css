@@ -596,7 +596,7 @@ form.card-editor .btn {
 }
 
 .deck-list ul li {
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1397,4 +1397,21 @@ footer p {
 .avt-links ul li a {
   text-decoration: none;
   white-space: nowrap;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.page-item {
+  border-top: 1px solid #ccc;
+}
+
+.page-item:hover {
+  border-top: 1px solid rgb(82, 82, 82);
+}
+
+.page-link:hover {
+  color: #000;
 }
