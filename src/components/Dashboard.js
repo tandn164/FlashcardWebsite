@@ -94,7 +94,8 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    decks={decks.slice(0, 3)}
+                    //decks={decks.slice(0, 3)}
+                    decks={decks}
                     setDeckToEdit={setDeckToEdit}
                   />
                 </div>
@@ -119,7 +120,8 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    decks={saveDecks.slice(0, 3)}
+                    //decks={saveDecks.slice(0, 3)}
+                    decks={saveDecks}
                   />
                 </div>
                 {saveDecks.length > 3 &&
