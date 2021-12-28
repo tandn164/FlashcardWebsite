@@ -93,7 +93,7 @@ const DeckList = ({
           deck={deck}
           mine={user && deck.owner == user.uid}
           setDeckToEdit={() => {
-            setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private, description: deck.description });
+            setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private, description: deck.description, isPublic: deck.isPublic });
           }}
         />
       );}

@@ -23,9 +23,11 @@ const DeckEditor = ({
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [description, setDescription] = useState(deck.description);
   const [listCards, setListCards] = useState([])
+  console.log(deck);
+  const [isPublic, setIsPublic] = useState(deck.isPublic ?? true);
 
   const updateDeck = () => {
-    dbMethods.updateDeck(user, deck.id, title, description, listCards)
+    dbMethods.updateDeck(user, deck.id, title, description, listCards, isPublic)
     setDeckToEdit({...deckToEdit, title});
     setUpdateSuccess(true);
     setTimeout(() => setUpdateSuccess(false), 3000);
@@ -89,6 +91,17 @@ const DeckEditor = ({
         onChange={(event) => setDescription(event.target.value)}
         autocomplete="off"
         />
+        <input
+        id="public"
+        name="public"
+        type="checkbox"
+        checked={isPublic ? false : true}
+        onChange={() => setIsPublic(!isPublic)}
+      />
+      <label htmlFor="public">
+        <span></span>
+        私だけが編集する権利を持っています?
+      </label>
       </form>
       <div>
         <PageHeading 

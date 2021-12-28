@@ -7,7 +7,7 @@ const useOnAllDecksSnapshot = () => {
 
   useEffect(() => {
     let ref = db.collection('decks');
-    let unsubscribe = ref.onSnapshot((snapshot) => {
+    let unsubscribe = ref.where("isPublic", "==", true).onSnapshot((snapshot) => {
       let arr = [];
       snapshot.forEach(deck => arr.push(deck.data()));
       setDecks(arr);

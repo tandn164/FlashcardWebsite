@@ -20,10 +20,11 @@ const DeckCreator = () => {
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
   const [updateSuccess, setUpdateSuccess] = useState(false);
-  const [listCards, setListCards] = useState([])
+  const [listCards, setListCards] = useState([]);
+  const [isPublic, setIsPublic] = useState(true);
 
   const createDeck = () => {
-    dbMethods.createDeck(user, title, description, listCards);
+    dbMethods.createDeck(user, title, description, listCards, isPublic);
     setUpdateSuccess(true);
     history.push("/app");
   }
@@ -60,6 +61,17 @@ const DeckCreator = () => {
         onChange={(event) => setDescription(event.target.value)}
         autocomplete="off"
       />
+      <input
+        id="public"
+        name="public"
+        type="checkbox"
+        checked={isPublic ? false : true}
+        onChange={() => setIsPublic(!isPublic)}
+      />
+      <label htmlFor="public">
+        <span></span>
+        私だけが編集する権利を持っています?
+      </label>
     </form>
       <div>
         <PageHeading 

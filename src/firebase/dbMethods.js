@@ -13,7 +13,7 @@ import { db } from "./firebaseIndex";
 import firebase from "firebase";
 
 export const dbMethods = {
-  createDeck: (user, title, description, cards) => {
+  createDeck: (user, title, description, cards, isPublic = true) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -28,6 +28,7 @@ export const dbMethods = {
       description,
       owner: user.uid,
       cards: cards,
+      isPublic: isPublic,
     };
 
     document
@@ -149,7 +150,7 @@ export const dbMethods = {
       });
   },
 
-  updateDeck: (user, deckId, title, description, cards) => {
+  updateDeck: (user, deckId, title, description, cards, isPublic = true) => {
     if (!user) {
       console.log("No user selected.");
       return;
@@ -160,6 +161,7 @@ export const dbMethods = {
       description,
       cards,
       numCards: cards.length,
+      isPublic: isPublic,
     };
 
     return db
