@@ -100,6 +100,7 @@ export const dbMethods = {
           title: deck.title,
           description: deck.description,
           cards: deck.cards,
+          isPublic: deck.isPublic,
         }),
       })
       .then(() => {

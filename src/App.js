@@ -21,18 +21,6 @@ import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
 import MobileMenu from './components/MobileMenu';
 
-const fisherYatesShuffle = (array) => {
-  var currentIndex = array.length, temporaryValue, randomIndex;
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-    temporaryValue = Object.assign({}, array[currentIndex]);
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-  return array;
-}
-
 const App = () => {
   const [selectedDecks, setSelectedDecks] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,10 +31,53 @@ const App = () => {
   const { saveDecks } = useOnSavedDecksSnapshot(user);
   const { allDecks } = useOnAllDecksSnapshot();
 
+  const [decksData, setDecksData] = useState([]);
+  const [saveDecksData, setSaveDecksData] = useState([]);
+  const [allDecksData, setAllDecksData] = useState([]);
+
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchText, setSearchText] = useState('');
+
+  useEffect(() => {
+    if (!isSearching) {
+      setDecksData(decks)
+    }
+  }, [decks])
+
+  useEffect(() => {
+    if (!isSearching) {
+      setSaveDecksData(saveDecks)
+    }
+  }, [saveDecks])
+
+  useEffect(() => {
+    if (!isSearching) {
+      setAllDecksData(allDecks)
+    }
+  }, [allDecks])
+
+  useEffect(() => {
+    if (!searchText || searchText.length == 0) {
+      setIsSearching(false)
+      setDecksData(decks)
+      setSaveDecksData(saveDecks)
+      setAllDecksData(allDecks)
+    } else {
+      setIsSearching(true)
+      setDecksData(decks.filter((element) => {return element.title.includes(searchText)}));
+      setSaveDecksData(saveDecks.filter((element) => {return element.title.includes(searchText)}));
+      setAllDecksData(allDecks.filter((element) => {return element.title.includes(searchText)}));
+    }
+  }, [searchText])
+
   useEffect(() => {
     if (user) return;
     setSelectedDecks([]);
   }, [user]);
+
+  const onSearch = (text) => {
+    setSearchText(text);
+  }
 
   const handleButtons = (event) => {
     switch (event.target.name) {
@@ -75,6 +106,7 @@ const App = () => {
       <Nav 
         onClick={handleButtons}
         isMenuOpen={isMenuOpen}
+        onSearch={onSearch}
       />
       <Switch>
         <Route path="/log-in">
@@ -107,8 +139,8 @@ const App = () => {
           <main>
             <Dashboard 
               onClick={handleButtons}
-              decks={decks}
-              saveDecks={saveDecks}
+              decks={decksData}
+              saveDecks={saveDecksData}
               selectedDecks={selectedDecks}
               setSelectedDecks={setSelectedDecks}
             />
@@ -117,7 +149,7 @@ const App = () => {
         <Route path="/">
           <main>
             <Home 
-              allDecks={allDecks} 
+              allDecks={allDecksData} 
               setSelectedDecks={setSelectedDecks} 
               selectedDecks={selectedDecks}
               />

@@ -25,7 +25,7 @@ function PaginatedItems({ itemsPerPage, decks, user, setDeckToEdit}) {
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);
     setCurrentItems(decks.slice(itemOffset, endOffset));
     setPageCount(Math.ceil(decks.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage]);
+  }, [itemOffset, itemsPerPage, decks]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -63,22 +63,10 @@ function PaginatedItems({ itemsPerPage, decks, user, setDeckToEdit}) {
 
 const DeckList = ({
   decks,
-  selectedDecks,
-  setSelectedDecks,
   setDeckToEdit,
 }) => {
   const [deckList, setDeckList] = useState([]);
   const { user } = useContext(firebaseAuth);
-
-  // const toggleDeck = (deckId) => {
-  //   setSelectedDecks(decks => {
-  //     if (decks.includes(deckId)) {
-  //       return decks.filter(ele => ele !== deckId)
-  //     } else {
-  //       return [...decks, deckId];
-  //     }
-  //   });
-  // }
 
   useEffect(() => {
     if (!decks) {return}
@@ -86,10 +74,7 @@ const DeckList = ({
       return (
         <SelectableDeck 
           key={deck.id}
-          // toggleDeck={toggleDeck}
-          // selectedDecks={selectedDecks}
           length={deck.numCards}
-          // setSelectedDecks={setSelectedDecks}
           deck={deck}
           mine={user && deck.owner == user.uid}
           setDeckToEdit={() => {
@@ -99,6 +84,9 @@ const DeckList = ({
       );}
     ));
   }, [decks]);
+
+  useEffect(() => {
+  }, [deckList])
 
   return (
     <div className="deck-list">
