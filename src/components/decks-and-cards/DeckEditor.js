@@ -26,6 +26,12 @@ const DeckEditor = ({
   console.log(deck);
   const [isPublic, setIsPublic] = useState(deck.isPublic ?? true);
 
+  const checkReadyToUpdate = () => {
+    if(listCards.length == 0) alert("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
+    else if (title.length <= 0) alert("フラッシュカードセットを初期化するには、カードのタイトルを入力する必要があります！");
+    else updateDeck();
+  }
+
   const updateDeck = () => {
     dbMethods.updateDeck(user, deck.id, title, description, listCards, isPublic)
     setDeckToEdit({...deckToEdit, title});
@@ -71,7 +77,7 @@ const DeckEditor = ({
         title="セットを編集する"
         styles={{textAlign: 'left'}}
       />
-      <form onSubmit={updateDeck}>
+      <form onSubmit={checkReadyToUpdate}>
         <TextInput 
           labelText="題名"
           icon={<FontAwesomeIcon icon={faPaperclip} />}
@@ -115,7 +121,7 @@ const DeckEditor = ({
       </div>
       <button
           className="btn btn-primary"
-          onClick={onUpdateDecks}
+          onClick={checkReadyToUpdate}
         >
           {updateSuccess ? "Success!" : "編集" }
         </button>

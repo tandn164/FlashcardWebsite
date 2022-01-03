@@ -24,6 +24,12 @@ const DeckCreator = () => {
   const [isPublic, setIsPublic] = useState(true);
   const [saveCount, setSaveCount] = useState(0);
 
+  const checkReadyToCreate = () => {
+    if(listCards.length == 0) alert("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
+    else if (title.length <= 0) alert("フラッシュカードセットを初期化するには、カードのタイトルを入力する必要があります！");
+    else createDeck();
+  }
+
   const createDeck = () => {
     dbMethods.createDeck(user, title, description, listCards, isPublic, saveCount);
     setUpdateSuccess(true);
@@ -42,7 +48,7 @@ const DeckCreator = () => {
     <div style={{textAlign: 'left'}}>
       <form 
       id="new-deck" 
-      onSubmit={createDeck}
+      onSubmit={checkReadyToCreate}
     >
       <TextInput 
         labelText="題名"
@@ -99,7 +105,7 @@ const DeckCreator = () => {
           onCards={onUpdateCards}
         />
       </div>
-      <button className="btn btn-primary" onClick={onUpdateDecks}>
+      <button className="btn btn-primary" onClick={checkReadyToCreate}>
           {updateSuccess ? "Success!" : "作成" }
       </button>
     </div>
