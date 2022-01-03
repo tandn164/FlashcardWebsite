@@ -20,6 +20,7 @@ function PaginatedItems({ itemsPerPage, decks, user, setDeckToEdit}) {
   const [itemOffset, setItemOffset] = useState(0);
 
   useEffect(() => {
+    // decks.sort((a, b) => b.saveCount - a.saveCount);
     // Fetch items from another resources.
     const endOffset = itemOffset + itemsPerPage;
     console.log(`Loading items from ${itemOffset} to ${endOffset}`);

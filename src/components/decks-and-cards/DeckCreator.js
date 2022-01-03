@@ -22,9 +22,10 @@ const DeckCreator = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [listCards, setListCards] = useState([]);
   const [isPublic, setIsPublic] = useState(true);
+  const [saveCount, setSaveCount] = useState(0);
 
   const createDeck = () => {
-    dbMethods.createDeck(user, title, description, listCards, isPublic);
+    dbMethods.createDeck(user, title, description, listCards, isPublic, saveCount);
     setUpdateSuccess(true);
     history.push("/app");
   }
