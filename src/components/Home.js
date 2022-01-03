@@ -15,7 +15,6 @@ const Home = ({
   if (!user) {
     history.push("/log-in");
   }
-  console.log(18888, allDecks);
   return (
     <Switch>
       <Route path="/app-edit" >
