@@ -63,7 +63,7 @@ const DeckCreator = () => {
       />
       <p>
         <span></span>
-        パブリックシェアリング？ デフォルト：はい。
+        パブリックシェアリング？ デフォルト：パブリック。
       </p>
       
       <input
@@ -75,7 +75,7 @@ const DeckCreator = () => {
         onChange={() => setIsPublic(true)}
         style={{marginRight: '10px'}}
       />
-      <span onClick={() => setIsPublic(true)}>はい</span>
+      <span onClick={() => setIsPublic(true)}>パブリック</span>
       <br></br>
       <input
         id="public-false"
@@ -86,7 +86,7 @@ const DeckCreator = () => {
         onChange={() => setIsPublic(false)}
         style={{marginRight: '10px'}}
       />
-      <span onClick={() => setIsPublic(false)}>いいえ</span>
+      <span onClick={() => setIsPublic(false)}>プライベート</span>
     </form>
       <div>
         <PageHeading 
