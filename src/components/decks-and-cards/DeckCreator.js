@@ -61,17 +61,32 @@ const DeckCreator = () => {
         onChange={(event) => setDescription(event.target.value)}
         autocomplete="off"
       />
-      <input
-        id="public"
-        name="public"
-        type="checkbox"
-        checked={isPublic ? false : true}
-        onChange={() => setIsPublic(!isPublic)}
-      />
-      <label htmlFor="public">
+      <p>
         <span></span>
-        私だけが編集する権利を持っています?
-      </label>
+        パブリックシェアリング？ デフォルト：はい。
+      </p>
+      
+      <input
+        id="public-true"
+        name="public"
+        type="radio"
+        value="はい"
+        checked={isPublic ? true : false}
+        onChange={() => setIsPublic(true)}
+        style={{marginRight: '10px'}}
+      />
+      <span onClick={() => setIsPublic(true)}>はい</span>
+      <br></br>
+      <input
+        id="public-false"
+        name="public"
+        type="radio"
+        value="いいえ"
+        checked={isPublic ? false : true}
+        onChange={() => setIsPublic(false)}
+        style={{marginRight: '10px'}}
+      />
+      <span onClick={() => setIsPublic(false)}>いいえ</span>
     </form>
       <div>
         <PageHeading 
