@@ -54,7 +54,9 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       .then((userCredential) => {
         let _user = userCredential.user;
         db.collection('users').doc(_user.uid).set({
-          save_decks: []
+          save_decks: [],
+          username: username,
+          email: email,
         });
         userCredential.user.updateProfile({displayName: username})
         setUserData(_user);
@@ -103,6 +105,9 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       console.log("User successfully reauthenticated.");
       auth.currentUser.updateEmail(email)
       .then(() => {
+        db.collection('users').doc(user.uid).update({
+          email: email,
+        });
         setStatus("success");
       })
       .catch((error) => {
@@ -113,6 +118,9 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       auth.currentUser.updateProfile({displayName: username, photoURL: avatarUrl})
       .then(() => {
         setUserData(auth.currentUser);
+        db.collection('users').doc(user.uid).update({
+          username: username,
+        });
         setStatus("success");
       })
       .catch((error) => {
