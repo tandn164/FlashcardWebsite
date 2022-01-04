@@ -35,8 +35,13 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       let _user = userCredential.user;
-      setUserData(_user);
-      setStatus("success");
+      if (_user.uid != "u1UXlHy2wvUC0LfSb5lQxO5d2jh1") {
+        auth.signOut();
+        setStatus("error");
+      } else {
+        setUserData(_user);
+        setStatus("success");
+      }
     })
     .catch((error) => {
       console.error("Error logging user in: ", error.message);

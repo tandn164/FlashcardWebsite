@@ -11,22 +11,15 @@ import TextInput from './TextInput';
 
 const Nav = ({
   onClick,
-  isMenuOpen,
-  mobile=false,
   onSearch,
 }) => {
   const [navClasses, setNavClasses] = useState("navbar");
-  const btnClasses= "btn btn-hamburger small-screen-only " + (isMenuOpen && "open"); 
+  const btnClasses= "btn btn-hamburger small-screen-only "; 
   let location = useLocation();
   const { user } = useContext(firebaseAuth);
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
-
-    if (mobile) {
-      setNavClasses("navbar");
-      return;
-    }
 
     if (location.pathname !== "/") {
       setNavClasses("navbar light");
@@ -34,7 +27,7 @@ const Nav = ({
     }
 
     setNavClasses("navbar");
-  }, [location, mobile])
+  }, [location])
 
   if (!user) {
     return null

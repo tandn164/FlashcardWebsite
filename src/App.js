@@ -7,73 +7,39 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { firebaseAuth } from './provider/AuthProvider';
-import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
-import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
-import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
+import useOnUserSnapshot from './hooks/useOnUserSnapshot';
 
-import Deck from './components/decks-and-cards/Deck';
-import Dashboard from './components/Dashboard';
-import Home from './components/Home';
 import Login from './components/account-management/Login';
 import Logout from './components/account-management/Logout';
 import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
-import Signup from './components/account-management/Signup';
-import MobileMenu from './components/MobileMenu';
+import Admin from './components/admin/Admin';
 
 const App = () => {
-  const [selectedDecks, setSelectedDecks] = useState([]);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
-  const { decks } = useOnDecksSnapshot(user);
-  const { saveDecks } = useOnSavedDecksSnapshot(user);
-  const { allDecks } = useOnAllDecksSnapshot();
+  const { users } = useOnUserSnapshot();
 
-  const [decksData, setDecksData] = useState([]);
-  const [saveDecksData, setSaveDecksData] = useState([]);
-  const [allDecksData, setAllDecksData] = useState([]);
+  const [usersData, setUserData] = useState([]);
 
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     if (!isSearching) {
-      setDecksData(decks)
+      setUserData(users)
     }
-  }, [decks])
-
-  useEffect(() => {
-    if (!isSearching) {
-      setSaveDecksData(saveDecks)
-    }
-  }, [saveDecks])
-
-  useEffect(() => {
-    if (!isSearching) {
-      setAllDecksData(allDecks)
-    }
-  }, [allDecks])
+  }, [users])
 
   useEffect(() => {
     if (!searchText || searchText.length == 0) {
       setIsSearching(false)
-      setDecksData(decks)
-      setSaveDecksData(saveDecks)
-      setAllDecksData(allDecks)
+      setUserData(users)
     } else {
       setIsSearching(true)
-      setDecksData(decks.filter((element) => {return element.title.includes(searchText)}));
-      setSaveDecksData(saveDecks.filter((element) => {return element.title.includes(searchText)}));
-      setAllDecksData(allDecks.filter((element) => {return element.title.includes(searchText)}));
+      setUserData(users.filter((element) => {return element.username.includes(searchText)}));
     }
   }, [searchText])
-
-  useEffect(() => {
-    if (user) return;
-    setSelectedDecks([]);
-  }, [user]);
 
   const onSearch = (text) => {
     setSearchText(text);
@@ -88,10 +54,6 @@ const App = () => {
         }
         history.push("/");
         return;
-  
-      case "toggle-menu":
-        setIsMenuOpen(prev => !prev);
-        return;
       default:
         return;
     }
@@ -105,7 +67,6 @@ const App = () => {
     <div className="app">
       <Nav 
         onClick={handleButtons}
-        isMenuOpen={isMenuOpen}
         onSearch={onSearch}
       />
       <Switch>
@@ -122,24 +83,11 @@ const App = () => {
             <MyAccount />
           </main>
         </Route>
-        <Route path="/user">
+        <Route path="/">
           <main>
-            <Dashboard 
-              onClick={handleButtons}
-              decks={decksData}
-              saveDecks={saveDecksData}
-              selectedDecks={selectedDecks}
-              setSelectedDecks={setSelectedDecks}
+            <Admin 
+              users={usersData}
             />
-          </main>
-        </Route>
-        <Route path="/set">
-          <main>
-            <Home 
-              allDecks={allDecksData} 
-              setSelectedDecks={setSelectedDecks} 
-              selectedDecks={selectedDecks}
-              />
           </main>
         </Route>
       </Switch>
