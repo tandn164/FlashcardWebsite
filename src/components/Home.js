@@ -75,7 +75,8 @@ const Home = ({
               />
               <div style={{textAlign: 'left'}}>
                 <DeckList
-                  decks={allDecks}
+                  //de tam day vi sort hoac orderBy trong useHook ko duoc :v
+                  decks={allDecks.sort((a, b) => b.saveCount - a.saveCount)}
                   setDeckToEdit={setDeckToEdit}
                 />
               </div>
