@@ -39,16 +39,23 @@ export const dbMethods = {
       });
   },
 
-  deleteDeck: (user, deckId) => {
-    if (!user) {
-      console.log("No user selected.");
-      return;
-    }
+  deleteDeck: (deckId) => {
 
     db.collection("decks")
       .doc(deckId)
       .delete()
       .then(console.log("Deck successfully deleted."))
+      .catch((err) => {
+        console.error("Error deleting deck: ", err.message);
+      });
+  },
+
+  deleteUser: (userId) => {
+
+    db.collection("users")
+      .doc(userId)
+      .delete()
+      .then(console.log("User successfully deleted."))
       .catch((err) => {
         console.error("Error deleting deck: ", err.message);
       });

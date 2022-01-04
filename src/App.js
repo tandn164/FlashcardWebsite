@@ -14,13 +14,16 @@ import Logout from './components/account-management/Logout';
 import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
 import Admin from './components/admin/Admin';
+import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
 
 const App = () => {
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
   const { users } = useOnUserSnapshot();
+  const { decks } = useOnDecksSnapshot();
 
   const [usersData, setUserData] = useState([]);
+  const [decksData, setDeckData] = useState([]);
 
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -32,12 +35,21 @@ const App = () => {
   }, [users])
 
   useEffect(() => {
+    console.log(decks);
+    if (!isSearching) {
+      setDeckData(decks)
+    }
+  }, [decks])
+
+  useEffect(() => {
     if (!searchText || searchText.length == 0) {
       setIsSearching(false)
       setUserData(users)
+      setDeckData(decks)
     } else {
       setIsSearching(true)
       setUserData(users.filter((element) => {return element.username.includes(searchText)}));
+      setDeckData(decks.filter((element) => {return element.title.includes(searchText)}))
     }
   }, [searchText])
 
@@ -87,6 +99,7 @@ const App = () => {
           <main>
             <Admin 
               users={usersData}
+              decks={decksData}
             />
           </main>
         </Route>

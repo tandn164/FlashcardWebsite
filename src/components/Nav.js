@@ -40,10 +40,6 @@ const Nav = ({
         <Link to="/" className="logo" >
         ホーム
         </Link>
-        <div style={{height: 30, width: 2, backgroundColor: 'black', marginLeft: 20, marginRight: 20}}></div>
-        <Link to="/app" className="logo">
-          私のフラッシュカード
-        </Link>
           </div>
           <input
           style={{outline: 'unset', height: 30, borderRadius: 15, paddingLeft: 10, borderColor: 'white'}}

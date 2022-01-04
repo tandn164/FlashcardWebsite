@@ -9,7 +9,13 @@ const useOnUserSnapshot = () => {
     let ref = db.collection('users');
     let unsubscribe = ref.onSnapshot((snapshot) => {
       let arr = [];
-      snapshot.forEach(user => arr.push(user.data()));
+      snapshot.forEach(user => {
+        arr.push({
+          username: user.data().username,
+          email: user.data().email,
+          id: user.id,
+        })
+      });
       setUsers(arr);
     }, error => console.log("Error: ", error.message))
 
