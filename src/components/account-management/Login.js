@@ -29,7 +29,7 @@ const Login = () => {
 
   useEffect(() => {
     if (user) {
-      history.push("/app");
+      history.push("/user");
     }
   }, [user]);
 
@@ -62,15 +62,12 @@ const Login = () => {
   return (
     <div className="login" style={{textAlign: 'center'}}>
       <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', marginRight: 200}}>
-        <div style={{display: 'flex', paddingRight: 50, fontSize: 25, alignItems: 'center'}}>
-          <Link to="/sign-up">サインアップ</Link>
-        </div>
         <PageHeading 
           title="ログイン"
         />
       </div>
       <form style={{display: 'inline-block'}} onSubmit={handleSubmit}>
-        <TextInput 
+        <TextInput
           labelText="メールアドレス"
           icon={<FontAwesomeIcon icon={faEnvelope} />}
           id="email"

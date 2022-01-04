@@ -117,25 +117,12 @@ const App = () => {
             <Logout />
           </main>
         </Route>
-        <Route path="/sign-up">
-          <Signup />
-        </Route>
         <Route path="/my-account">
           <main>
             <MyAccount />
           </main>
         </Route>
-        <Route path="/app/shuffle">
-          <Deck 
-            onClick={handleButtons}
-          />
-        </Route>
-        <Route path="/app/d/:hash">
-          <Deck 
-            onClick={handleButtons}
-          />
-        </Route>
-        <Route path="/app">
+        <Route path="/user">
           <main>
             <Dashboard 
               onClick={handleButtons}
@@ -146,7 +133,7 @@ const App = () => {
             />
           </main>
         </Route>
-        <Route path="/">
+        <Route path="/set">
           <main>
             <Home 
               allDecks={allDecksData} 
