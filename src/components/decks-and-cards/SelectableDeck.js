@@ -64,7 +64,10 @@ const SelectableDeck = ({
         </label>
       </div>
       <div>
-      <span>保存する人の数:&nbsp;</span><span style={{fontWeight: '700'}}>{deck.saveCount}</span>
+      <span>説明:&nbsp;</span>
+      <div style={{maxWidth: 300}}>
+      <text style={{fontWeight: '500', display: '-webkit-box', wordBreak: 'break-word'}}>{deck.description}</text>
+        </div>
       </div>
       <div className="button-row">
         {mine ? <button 
@@ -85,7 +88,6 @@ const SelectableDeck = ({
         onClick={(event) => {
           event.stopPropagation();
           if (saved) {
-            console.log(deck)
             dbMethods.unsaveDeck(user, deck)
             setSaved(false)
           } else {

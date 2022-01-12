@@ -26,6 +26,12 @@ const CardCreator = ({
 
   const createCard = (event) => {
     event.preventDefault();
+    if (front.length <= 0 && image == null) {
+      return;
+    }
+    if (back.length <=0 ) {
+      return;
+    }
     console.log("Creating new card.");
     onCreateCard(front, back, image);
     setFront("");

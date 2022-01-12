@@ -10,6 +10,7 @@ import Accordion from '../Accordion';
 import PageHeading from '../PageHeading';
 import TextInput from '../TextInput';
 import firebase from 'firebase';
+import { useAlert } from 'react-alert';
 
 const DeckEditor = ({
   deckToEdit,
@@ -25,10 +26,12 @@ const DeckEditor = ({
   const [listCards, setListCards] = useState([])
   console.log(deck);
   const [isPublic, setIsPublic] = useState(deck.isPublic ?? true);
+  const alert = useAlert()
 
   const checkReadyToUpdate = () => {
-    if(listCards.length == 0) alert("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
-    else if (title.length <= 0) alert("フラッシュカードセットを初期化するには、カードのタイトルを入力する必要があります！");
+    if(listCards.length == 0) alert.show("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
+    else if (title.length <= 0) alert.show("フラッシュカードセットを初期化するには、セットのタイトルを入力する必要があります！");
+    else if (description.length <= 0) alert.show("フラッシュカードセットを初期化するには、セットの説明を入力する必要があります！");
     else updateDeck();
   }
 
@@ -97,17 +100,32 @@ const DeckEditor = ({
         onChange={(event) => setDescription(event.target.value)}
         autocomplete="off"
         />
-        <input
-        id="public"
-        name="public"
-        type="checkbox"
-        checked={isPublic ? false : true}
-        onChange={() => setIsPublic(!isPublic)}
-      />
-      <label htmlFor="public">
+        <p>
         <span></span>
-        私だけが編集する権利を持っています?
-      </label>
+        パブリックシェアリング？ デフォルト：パブリック。
+      </p>
+      
+      <input
+        id="public-true"
+        name="public"
+        type="radio"
+        value="はい"
+        checked={isPublic ? true : false}
+        onChange={() => setIsPublic(true)}
+        style={{marginRight: '10px'}}
+      />
+      <span onClick={() => setIsPublic(true)}>パブリック</span>
+      <br></br>
+      <input
+        id="public-false"
+        name="public"
+        type="radio"
+        value="いいえ"
+        checked={isPublic ? false : true}
+        onChange={() => setIsPublic(false)}
+        style={{marginRight: '10px'}}
+      />
+      <span onClick={() => setIsPublic(false)}>プライベート</span>
       </form>
       <div>
         <PageHeading 

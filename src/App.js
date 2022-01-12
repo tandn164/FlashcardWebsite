@@ -19,7 +19,6 @@ import Logout from './components/account-management/Logout';
 import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
-import MobileMenu from './components/MobileMenu';
 
 const App = () => {
   const [selectedDecks, setSelectedDecks] = useState([]);

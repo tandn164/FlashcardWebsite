@@ -38,6 +38,12 @@ const CardEditor = ({
 
   const updateCard = (event) => {
     event.preventDefault();
+    if (front.length <= 0 || image == null) {
+      return;
+    }
+    if (back.length <=0 ) {
+      return;
+    }
     console.log("Card to update: ", card.id);
     onUpdate(index, front, back, image)
     onSubmit();

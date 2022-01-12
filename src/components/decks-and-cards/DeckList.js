@@ -38,12 +38,12 @@ function PaginatedItems({ itemsPerPage, decks, user, setDeckToEdit}) {
     <>
       <Items currentItems={currentItems} user={user} />
       <ReactPaginate
-        nextLabel="next >"
+        nextLabel="次 ->"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
         marginPagesDisplayed={2}
         pageCount={pageCount}
-        previousLabel="< previous"
+        previousLabel="<- 前"
         pageClassName="page-item"
         pageLinkClassName="page-link"
         previousClassName="page-item"

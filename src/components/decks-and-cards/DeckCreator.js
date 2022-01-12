@@ -13,6 +13,7 @@ import { faBook, faPaperclip } from '@fortawesome/free-solid-svg-icons';
 import TextInput from '../TextInput';
 import PageHeading from '../PageHeading';
 import Accordion from '../Accordion';
+import { useAlert } from 'react-alert';
 
 const DeckCreator = () => {
   const [title, setTitle] = useState("");
@@ -23,10 +24,13 @@ const DeckCreator = () => {
   const [listCards, setListCards] = useState([]);
   const [isPublic, setIsPublic] = useState(true);
   const [saveCount, setSaveCount] = useState(0);
+  const alert = useAlert()
 
-  const checkReadyToCreate = () => {
-    if(listCards.length == 0) alert("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
-    else if (title.length <= 0) alert("フラッシュカードセットを初期化するには、カードのタイトルを入力する必要があります！");
+  const checkReadyToCreate = (event) => {
+    event.preventDefault();
+    if(listCards.length == 0) alert.show("フラッシュカードセットを初期化するには、少なくとも1枚のカードが必要です！");
+    else if (title.length <= 0) alert.show("フラッシュカードセットを初期化するには、セットのタイトルを入力する必要があります！");
+    else if (description.length <= 0) alert.show("フラッシュカードセットを初期化するには、セットの説明を入力する必要があります！");
     else createDeck();
   }
 

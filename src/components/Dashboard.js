@@ -18,6 +18,7 @@ import SavedDecks from './SavedDecks';
 import CreatedDecks from './CreatedDecks';
 import Deck from './decks-and-cards/Deck';
 import Test from './decks-and-cards/Test';
+import TestCompare from './decks-and-cards/TestCompare';
 
 const Dashboard = ({
   onClick,
@@ -81,9 +82,10 @@ const Dashboard = ({
           />
         </Route>
         <Route path="/app/test/:hash">
-          <Test 
-            onClick={handleButtons}
-          />
+          <Test/>
+        </Route>
+        <Route path="/app/test-match/:hash">
+          <TestCompare/>
         </Route>
         <Route path="/app">
           <div style={{ display: 'flex' }}>
@@ -94,23 +96,10 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    //decks={decks.slice(0, 3)}
                     decks={decks}
                     setDeckToEdit={setDeckToEdit}
                   />
                 </div>
-                {decks.length > 3 &&
-                  <div style={{ display: 'flex', justifyContent: 'end' }}>
-                    <button
-                      id="shuffle"
-                      name="shuffle"
-                      onClick={() => {
-                        history.push('/app/created')
-                      }}
-                      style={{ color: 'black', background: 'transparent', border: 'unset', fontSize: 20 }}
-                    > もっと見る
-                    </button>
-                  </div>}
               </div>
             </div>
             <div style={{ width: '50%', margin: '0 auto', paddingLeft: 30 }}>
@@ -120,23 +109,9 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    //decks={saveDecks.slice(0, 3)}
                     decks={saveDecks}
                   />
                 </div>
-                {saveDecks.length > 3 &&
-                  <div style={{ display: 'flex', justifyContent: 'end' }}>
-                    <button
-                      id="shuffle"
-                      name="shuffle"
-                      onClick={() => {
-                        history.push('/app/saved')
-                      }}
-                      style={{ color: 'black', background: 'transparent', border: 'unset', fontSize: 20 }}
-                    > もっと見る
-                    </button>
-                  </div>
-                }
               </div>
             </div>
 

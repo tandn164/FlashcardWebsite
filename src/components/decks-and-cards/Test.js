@@ -5,14 +5,10 @@
  */
 
  import React, { useState, useEffect } from 'react';
- import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
- import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
  import firebase from 'firebase';
  
  import { useParams } from 'react-router-dom';
  
- import Carousel from '../Carousel';
- import FlippableCard from './FlippableCard';
  import Spinner from '../Spinner';
  
  const shuffleCard = (array) => {
@@ -30,9 +26,7 @@
     return array;
   }
 
- const Test = ({ 
-   onClick,
- }) => {
+ const Test = () => {
    const [cards, setCards] = useState([]);
    const [hashCards, setHashCards] = useState(null);
    const [isCardFlipped, setIsCardFlipped] = useState(false);
@@ -42,6 +36,7 @@
    const [correctAnswer, setCorrectAnswer] = useState([]);
    const [selectedAnswer, setSelectedAnswer] = useState([]);
    const [result, setResult] = useState();
+   const [submitted, setSubmitted] = useState(false);
  
    useEffect(() => {
      setIsLoaded(false);
@@ -111,7 +106,7 @@
        setIsLoaded(true);
      }
 
-     }, [isCardFlipped, onClick, hashCards]
+     }, [isCardFlipped, hashCards]
    );
  
    if (!isLoaded) return (
@@ -150,6 +145,12 @@
                         {ele?.question}
                     </div>
                 {ele?.answers?.map((element, index)=> {
+                  let backgroundColor = index == selectedAnswer[cardIndex] ? 'green' : 'white'
+                  if (submitted) {
+                    if (selectedAnswer[cardIndex] != correctAnswer[cardIndex] && index == correctAnswer[cardIndex]) {
+                      backgroundColor = 'red'
+                    }
+                  }
                     return <div style={{
                         height: 30,
                         width: '80%',
@@ -161,7 +162,7 @@
                         textAlign: 'center',
                         lineHeight: 2,
                         verticalAlign: 'center',
-                        backgroundColor: index == selectedAnswer[cardIndex] ? 'green' : 'white',
+                        backgroundColor: backgroundColor,
                     }} onClick={(event) => {
                      const newAnswer = [
                          ...selectedAnswer.slice(0, cardIndex),
@@ -209,6 +210,7 @@
                     totalResult += 1;
                 }
             }
+            setSubmitted(true);
             setResult(totalResult);
         }}>Submit</div>
     </div>

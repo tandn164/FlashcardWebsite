@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useAlert } from "react-alert";
 import { storage } from "../../firebase/firebaseIndex";
 import { firebaseAuth } from "../../provider/AuthProvider";
 
@@ -9,10 +10,10 @@ const UploadAndDisplayImage = ({
     const [image, setImage] = useState(null);
     const [filePath, setFilePath] = useState(imageRef);
     const { user } = useContext(firebaseAuth);
+    const alert = useAlert()
 
     useEffect(() => {
         if (imageRef) {
-            console.log(imageRef);
             storage.ref(imageRef).getDownloadURL().then((downloadURL) => {
                 setImage(downloadURL)
             });
@@ -29,57 +30,51 @@ const UploadAndDisplayImage = ({
                     <button onClick={() => {
                         const deleteTask = storage.ref(filePath).delete();
                         deleteTask.then(() => {
-                            console.log('File deleted successfully');
+                            alert.show('ファイルが正常に削除されました');
+                            setFilePath(null)
                             onSetImage(null)
                         }).catch((error) => {
                         });
-                    }}>Remove</button>
+                    }}>削除する</button>
                 </div>
             )}
             <br />
 
             <br />
+            {filePath == null && 
             <input
-                type="file"
-                name="myImage"
-                onChange={(event) => {
-                    if (filePath) {
-                        const deleteTask = storage.ref(filePath).delete();
-                        deleteTask.then(() => {
-                            console.log('File deleted successfully');
-                            onSetImage(null)
-                        }).catch((error) => {
-                            
+            type="file"
+            name="myImage"
+            onChange={(event) => {
+                
+                const uploadTask = storage.ref(`${user.uid}/${event.target.files[0].name}`).put(event.target.files[0]);
+                uploadTask.on('state_changed',
+                    (snapshot) => {
+                        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        switch (snapshot.state) {
+                            case 'paused':
+                                console.log('Upload is paused');
+                                break;
+                            case 'running':
+                                console.log('Upload is running');
+                                break;
+                        }
+                    },
+                    (error) => {
+                    },
+                    () => {
+                        storage.ref(`${user.uid}`).child(event.target.files[0].name).getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                            alert.show("ファイルが正常にアップロードされました")
+                            onSetImage(`${user.uid}/${event.target.files[0].name}`);
+                            setImage(downloadURL)
+                            setFilePath(`${user.uid}/${event.target.files[0].name}`)
                         });
                     }
-
-                    const uploadTask = storage.ref(`${user.uid}/${event.target.files[0].name}`).put(event.target.files[0]);
-                    uploadTask.on('state_changed',
-                        (snapshot) => {
-                            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                            console.log('Upload is ' + progress + '% done');
-                            switch (snapshot.state) {
-                                case 'paused':
-                                    console.log('Upload is paused');
-                                    break;
-                                case 'running':
-                                    console.log('Upload is running');
-                                    break;
-                            }
-                        },
-                        (error) => {
-                        },
-                        () => {
-                            storage.ref(`${user.uid}`).child(event.target.files[0].name).getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                                console.log('File available at', downloadURL);
-                                onSetImage(`${user.uid}/${event.target.files[0].name}`);
-                                setImage(downloadURL)
-                                setFilePath(`${user.uid}/${event.target.files[0].name}`)
-                            });
-                        }
-                    );
-                }}
-            />
+                );
+            }}
+        />
+            }
         </div>
     );
 };

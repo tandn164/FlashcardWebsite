@@ -15,12 +15,14 @@ import Carousel from '../Carousel';
 import FlippableCard from './FlippableCard';
 import Spinner from '../Spinner';
 import { faRandom, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { useAlert } from 'react-alert';
 
 const Deck = ({
   onClick,
 }) => {
   const [cards, setCards] = useState([]);
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [hashCards, setHashCards] = useState(null);
   const [isCardFlipped, setIsCardFlipped] = useState(false);
   const [canView, setCanView] = useState(true);
@@ -29,6 +31,7 @@ const Deck = ({
   const [shuffle, setShuffle] = useState(0);
   const [cardShuffle, setCardShuffle] = useState([]);
   const history = useHistory();
+  const alert = useAlert()
 
   useEffect(() => {
     setIsLoaded(false);
@@ -56,6 +59,7 @@ const Deck = ({
         snapshot.data().cards?.forEach(item => arr.push(item));
         setHashCards(arr);
         setTitle(snapshot.data().title)
+        setDescription(snapshot.data().description)
       })
       .catch(error => console.log("Error: ", error.message))
   }, [hash]);
@@ -148,12 +152,20 @@ const Deck = ({
 
   return (
     <div style={{ display: 'flex' }}>
-      <div style={{ width: 200, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: '#DADCE2' }}>
+      <div style={{ width: 250, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: '#DADCE2' }}>
         <div style={{
           position: 'absolute',
           top: 100
         }}>
           {title}
+          <br/>
+          <br/>
+          <br/>
+          
+          <div style={{maxWidth: 200}}>
+            {"説明: "}
+            <text style={{fontWeight: '500', display: '-webkit-box', wordBreak: 'break-word'}}>{description}</text>
+          </div>
         </div>
         <div style={{
           background: shuffle == 0 ? 'wheat' : 'green',
@@ -194,13 +206,13 @@ const Deck = ({
         nextCallback={slideCallback}
         showButtons={true}
       />
-      <div style={{ width: 200, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DADCE2' }}>
+      <div style={{ width: 250, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: '#DADCE2' }}>
         <button
           onClick={() => {
             if (cards.length >= 4) {
               history.push('/app/test/'+hash)
             } else {
-              window.alert('テストを作成するには、セットに少なくとも4枚のカードが必要です')
+              alert.show('テストを作成するには、セットに少なくとも4枚のカードが必要です')
             }
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
@@ -209,7 +221,15 @@ const Deck = ({
         </button>
         <button
           onClick={() => {
-            window.alert('機能は開発中です')
+            history.push('/app/test-match/'+hash)
+          }}
+          style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
+        >
+          <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} />マッチング</>
+        </button>
+        <button
+          onClick={() => {
+            alert.show('機能は開発中です')
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30 }}
         >
