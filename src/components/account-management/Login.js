@@ -39,6 +39,11 @@ const Login = () => {
       return;
     }
 
+    if (error === "deactive") {
+      setErrorMessage("User deactived");
+        return;
+    }
+
     switch (error.code) {
       case null:
         setErrorMessage("");

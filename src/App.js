@@ -9,6 +9,7 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 import { firebaseAuth } from './provider/AuthProvider';
 import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
 import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
+import useOnUserStatusSnapshot from './hooks/useOnUserStatusSnapshot';
 
 import Deck from './components/decks-and-cards/Deck';
 import Dashboard from './components/Dashboard';
@@ -27,6 +28,7 @@ const App = () => {
   const { user } = useContext(firebaseAuth);
   const { decks } = useOnDecksSnapshot(user);
   const { allDecks, saveDecks } = useOnAllDecksSnapshot(user);
+  const { userStatus } = useOnUserStatusSnapshot(user); 
 
   const [decksData, setDecksData] = useState([]);
   const [saveDecksData, setSaveDecksData] = useState([]);
@@ -52,6 +54,15 @@ const App = () => {
       setAllDecksData(allDecks)
     }
   }, [allDecks])
+
+  useEffect(() => {
+    if (userStatus == null) {
+      return;
+    }
+    if (!(userStatus?.isActive ?? false)) {
+      history.push('/log-out');
+    }
+  }, [userStatus])
 
   useEffect(() => {
     if (!searchText || searchText.length == 0) {

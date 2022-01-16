@@ -35,8 +35,25 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
     auth.signInWithEmailAndPassword(email, password)
     .then((userCredential) => {
       let _user = userCredential.user;
-      setUserData(_user);
-      setStatus("success");
+      db.collection('users').doc(_user.uid).get().then((doc) => {
+        let data = {
+          uid: _user.uid,
+          ...doc.data()
+        }
+        if (data.isActive ?? false) {
+          setUserData(data);
+          setStatus("success");
+        } else {
+          auth.signOut()
+          setError("deactive");
+          setStatus("error");
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging user in: ", error.message);
+        setError(error);
+        setStatus("error");
+      });
     })
     .catch((error) => {
       console.error("Error logging user in: ", error.message);
