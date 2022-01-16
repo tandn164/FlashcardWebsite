@@ -29,7 +29,7 @@ export const dbMethods = {
       owner: user.uid,
       cards: cards,
       isPublic: isPublic,
-      saveCount: saveCount
+      saved_users: []
     };
 
     document
