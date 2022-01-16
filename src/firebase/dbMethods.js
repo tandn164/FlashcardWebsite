@@ -61,23 +61,12 @@ export const dbMethods = {
       return;
     }
     return db
-      .collection("users")
-      .doc(user.uid)
+      .collection("decks")
+      .doc(deck.id)
       .update({
-        save_decks: firebase.firestore.FieldValue.arrayUnion(deck),
+        saved_users: firebase.firestore.FieldValue.arrayUnion(user.uid),
       })
       .then(() => {
-        db.collection("decks")
-          .doc(deck.id)
-          .update({
-            saveCount: firebase.firestore.FieldValue.increment(1)
-          })
-          .then(() => {
-            console.log("Updated save count number of deck with id: ", deck.id);
-          })
-          .catch((err) => {
-            console.error("Error updating document: ", err.message);
-          });
         console.log("Updated deck with id: ", deck.id);
       })
       .catch((err) => {
@@ -85,66 +74,18 @@ export const dbMethods = {
       });
   },
 
-  unsaveDeck: (user, deck) => {
+  unsaveDeck: async (user, deck) => {
     if (!user) {
       console.log("No user selected.");
       return;
     }
     return db
-      .collection("users")
-      .doc(user.uid)
+      .collection("decks")
+      .doc(deck.id)
       .update({
-        save_decks: firebase.firestore.FieldValue.arrayRemove({
-          id: deck.id,
-          numCards: deck.numCards,
-          owner: deck.owner,
-          title: deck.title,
-          description: deck.description,
-          cards: deck.cards,
-          isPublic: deck.isPublic,
-        }),
+        saved_users: firebase.firestore.FieldValue.arrayRemove(user.uid),
       })
       .then(() => {
-        let ref = db
-          .collection("decks")
-          .doc(deck.id)
-          .get()
-          .then((doc) => {
-            if (doc.data().saveCount > 0) {
-              db.collection("decks")
-                .doc(deck.id)
-                .update({
-                  saveCount: firebase.firestore.FieldValue.increment(-1),
-                })
-                .then(() => {
-                  console.log(
-                    "Updated save count number of deck with id: ",
-                    deck.id
-                  );
-                })
-                .catch((err) => {
-                  console.error("Error updating document: ", err.message);
-                });
-            } else {
-              db.collection("decks")
-                .doc(deck.id)
-                .update({
-                  saveCount: 0,
-                })
-                .then(() => {
-                  console.log(
-                    "Updated save count number of deck with id: ",
-                    deck.id
-                  );
-                })
-                .catch((err) => {
-                  console.error("Error updating document: ", err.message);
-                });
-            }
-          })
-          .catch((err) => {
-            console.error("Error getting document data: ", err.message);
-          });
         console.log("Updated deck with id: ", deck.id);
       })
       .catch((err) => {

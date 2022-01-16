@@ -8,7 +8,6 @@ import { Route, Switch, useHistory } from 'react-router-dom';
 
 import { firebaseAuth } from './provider/AuthProvider';
 import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
-import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
 import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 
 import Deck from './components/decks-and-cards/Deck';
@@ -27,8 +26,7 @@ const App = () => {
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
   const { decks } = useOnDecksSnapshot(user);
-  const { saveDecks } = useOnSavedDecksSnapshot(user);
-  const { allDecks } = useOnAllDecksSnapshot();
+  const { allDecks, saveDecks } = useOnAllDecksSnapshot(user);
 
   const [decksData, setDecksData] = useState([]);
   const [saveDecksData, setSaveDecksData] = useState([]);

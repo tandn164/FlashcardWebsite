@@ -57,6 +57,8 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
           save_decks: [],
           username: username,
           email: email,
+          isActive: true,
+          isPrenium: false,
         });
         userCredential.user.updateProfile({displayName: username})
         setUserData(_user);
