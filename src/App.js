@@ -19,6 +19,8 @@ import Logout from './components/account-management/Logout';
 import MyAccount from './components/account-management/MyAccount';
 import Nav from './components/Nav';
 import Signup from './components/account-management/Signup';
+import Upgrade from './components/account-management/Upgrade';
+import BuyCoin from './components/account-management/BuyCoin';
 
 const App = () => {
   const [selectedDecks, setSelectedDecks] = useState([]);
@@ -133,6 +135,20 @@ const App = () => {
             <MyAccount />
           </main>
         </Route>
+        <Route path="/upgrade">
+          <main>
+            <Upgrade 
+              userStatus={userStatus}
+            />
+          </main>
+        </Route>
+        <Route path="/buy-coin">
+          <main>
+            <BuyCoin
+              userStatus={userStatus}
+            />
+          </main>
+        </Route>
         <Route path="/app/shuffle">
           <Deck 
             onClick={handleButtons}
@@ -151,6 +167,7 @@ const App = () => {
               saveDecks={saveDecksData}
               selectedDecks={selectedDecks}
               setSelectedDecks={setSelectedDecks}
+              userStatus={userStatus}
             />
           </main>
         </Route>
@@ -160,6 +177,7 @@ const App = () => {
               allDecks={allDecksData} 
               setSelectedDecks={setSelectedDecks} 
               selectedDecks={selectedDecks}
+              userStatus={userStatus}
               />
           </main>
         </Route>

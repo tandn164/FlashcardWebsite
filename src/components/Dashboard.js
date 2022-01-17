@@ -19,9 +19,10 @@ import CreatedDecks from './CreatedDecks';
 import Deck from './decks-and-cards/Deck';
 import Test from './decks-and-cards/Test';
 import TestCompare from './decks-and-cards/TestCompare';
+import { useAlert } from 'react-alert';
 
 const Dashboard = ({
-  onClick,
+  userStatus,
   decks,
   saveDecks,
   cards,
@@ -29,6 +30,10 @@ const Dashboard = ({
   const [deckToEdit, setDeckToEdit] = useState(null);
   const { user } = useContext(firebaseAuth);
   const history = useHistory();
+  const isPrenium = () => {
+    return userStatus?.isPrenium ?? false
+  }
+  const alert = useAlert()
 
   const handleButtons = (event) => {
     switch (event.target.name) {
@@ -88,6 +93,12 @@ const Dashboard = ({
           <TestCompare/>
         </Route>
         <Route path="/app">
+          {!isPrenium() && <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+            <div style={{color: 'red'}}>プレミアムにアップグレードしていない場合は、完全な機能のためにアップグレードしてください</div>
+            <button style={{width: 100, height: 40, borderRadius: 10, background: 'rgb(234, 178, 174)', fontSize: 12}} onClick={
+              () => {history.push('/upgrade')}
+            }>アップグレード</button>
+          </div>}
           <div style={{ display: 'flex' }}>
             <div style={{ width: '50%', margin: '0 auto', paddingRight: 30 }}>
               <PageHeading
@@ -96,8 +107,9 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    decks={decks}
+                    decks={isPrenium() ? decks : decks.slice(0,3)}
                     setDeckToEdit={setDeckToEdit}
+                    userStatus={userStatus}
                   />
                 </div>
               </div>
@@ -109,7 +121,8 @@ const Dashboard = ({
               <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                 <div>
                   <DeckList
-                    decks={saveDecks}
+                    decks={isPrenium() ? saveDecks : saveDecks.slice(0, 3)}
+                    userStatus={userStatus}
                   />
                 </div>
               </div>
@@ -118,8 +131,12 @@ const Dashboard = ({
             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingTop: 100, paddingLeft: 60, width: 200 }}>
               <button
                 onClick={() => {
-                  history.push('/app/create')
-                }}
+                  if (isPrenium() || decks.length < 3) {
+                    history.push('/app/create')
+                  } else {
+                    alert.show("プレミアムにアップグレードしていない場合は、完全な機能のためにアップグレードしてください")
+                  }
+                }} 
                 style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
               >
                 <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 新作</>

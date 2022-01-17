@@ -71,11 +71,11 @@ const useAuth = (username = null, email = null, password = null, newPassword = n
       .then((userCredential) => {
         let _user = userCredential.user;
         db.collection('users').doc(_user.uid).set({
-          save_decks: [],
           username: username,
           email: email,
           isActive: true,
           isPrenium: false,
+          coin: 0,
         });
         userCredential.user.updateProfile({displayName: username})
         setUserData(_user);

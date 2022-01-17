@@ -64,6 +64,7 @@ function PaginatedItems({ itemsPerPage, decks, user, setDeckToEdit}) {
 const DeckList = ({
   decks,
   setDeckToEdit,
+  userStatus
 }) => {
   const [deckList, setDeckList] = useState([]);
   const { user } = useContext(firebaseAuth);
@@ -77,6 +78,7 @@ const DeckList = ({
           length={deck.numCards}
           deck={deck}
           mine={user && deck.owner == user.uid}
+          userStatus={userStatus}
           setDeckToEdit={() => {
             setDeckToEdit({ id: deck.id, title: deck.title, private: deck.private, description: deck.description, isPublic: deck.isPublic });
           }}

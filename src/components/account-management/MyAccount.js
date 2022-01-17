@@ -36,6 +36,8 @@ const MyAccount = () => {
     resetStatus
   } = useAuth(inputs.username, inputs.email, inputs.password, inputs.newPassword);
 
+  const isPrenium = JSON.parse(localStorage.getItem('isPrenium') ?? 'false')
+
   const history = useHistory();
 
   const handleChange = e => {
@@ -55,7 +57,19 @@ const MyAccount = () => {
             <div>
               <PageHeading
                 title="アカウント"
+                subTitle={isPrenium == 'true' ? "プレミアム" : "トライアル"}
+                subTitleStyles={{color: isPrenium ? 'green' : 'red', textAlign: 'center'}}
               />
+              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+                <div>利用可能なコイン: 100 コイン</div>
+                <button style={{width: 100, height: 30, borderRadius: 10, background: 'green', color: 'white', fontSize: 10}} onClick={() => {
+                  history.push('/buy-coin')
+                }}>コインを買う</button>
+                <button style={{width: 100, height: 30, borderRadius: 10, background: 'rgb(234, 178, 174)', fontSize: 10}} onClick={() => {
+                  history.push('/upgrade')
+                }}>アップグレード</button>
+
+              </div>
               <div className="account-data">
                   <Link to="/my-account/change-email" className="btn btn-tertiary">
                     <span>メールを更新する</span><FontAwesomeIcon icon={faAngleRight} className="icon" />

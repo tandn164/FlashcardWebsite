@@ -8,6 +8,7 @@ import DeckEditor from './decks-and-cards/DeckEditor';
 
 const Home = ({
   allDecks,
+  userStatus
 }) => {
   const { user } = useContext(firebaseAuth);
   const [deckToEdit1, setDeckToEdit] = useState(null);
@@ -78,6 +79,7 @@ const Home = ({
                   //de tam day vi sort hoac orderBy trong useHook ko duoc :v
                   decks={allDecks.sort((a, b) => b.saveCount - a.saveCount)}
                   setDeckToEdit={setDeckToEdit}
+                  userStatus={userStatus}
                 />
               </div>
             </div>

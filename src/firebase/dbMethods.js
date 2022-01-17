@@ -118,4 +118,27 @@ export const dbMethods = {
         console.error("Error updating document: ", err.message);
       });
   },
+
+  updateUser: async (user, coin, isPrenium) => {
+    if (!user) {
+      console.log("No user selected.");
+      return;
+    }
+
+    const updatedUser = {
+      coin,
+      isPrenium,
+    };
+
+    return db
+      .collection("users")
+      .doc(user.uid)
+      .update(updatedUser)
+      .then(() => {
+        console.log("Updated user with uid: ", user.uid);
+      })
+      .catch((err) => {
+        console.error("Error updating document: ", err.message);
+      });
+  },
 };

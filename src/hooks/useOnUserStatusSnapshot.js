@@ -15,9 +15,13 @@ const useOnUserStatusSnapshot = (user) => {
       let unsubscribe = ref.doc(user.uid).onSnapshot((snapshot) => {
         let status = {
           isActive: snapshot.data().isActive,
-          isPrenium: snapshot.data().isPrenium
+          isPrenium: snapshot.data().isPrenium,
+          coin: snapshot.data().coin
         }
         setUserStatus(status)
+        localStorage.setItem('isActive', JSON.stringify(snapshot.data().isActive))
+        localStorage.setItem('isPrenium', JSON.stringify(snapshot.data().isPrenium))
+        localStorage.setItem('coin', JSON.stringify(snapshot.data().coin))
       }, error => console.log("Error: ", error.message))
   
       return () => unsubscribe();
