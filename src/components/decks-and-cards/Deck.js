@@ -195,7 +195,7 @@ const Deck = ({
         }} onClick={(event) => {
           setCardShuffle(shuffleCard(cardShuffle))
           setShuffle(prev => prev + 1)
-        }}>ミックス</div>
+        }}>ランダム</div>
       </div>
       <Carousel
         items={shuffle != 0 ? cardShuffle : cards}
