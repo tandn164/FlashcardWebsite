@@ -217,7 +217,7 @@ const Deck = ({
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
         >
-          <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 復習</>
+          <> 復習</>
         </button>
         <button
           onClick={() => {
@@ -225,7 +225,7 @@ const Deck = ({
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
         >
-          <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} />マッチング</>
+          <>マッチング</>
         </button>
         <button
           onClick={() => {
@@ -233,7 +233,7 @@ const Deck = ({
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30 }}
         >
-          <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 履歴</>
+          <>履歴</>
         </button>
       </div>
     </div>

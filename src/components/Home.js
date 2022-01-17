@@ -31,12 +31,6 @@ const Home = ({
               <div className="hero-content">
                 <div className="buttons">
                   <>
-                    <Link
-                      className="btn btn-cta"
-                      to="/app"
-                    >
-                      ダッシュボード
-                    </Link>
                   </>
                 </div>
               </div>

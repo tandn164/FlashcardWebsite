@@ -45,7 +45,7 @@ const Nav = ({
       <div className="navbar-inner">
         <div className="logo">
         <Link to="/" className="logo" >
-        ホーム
+        ディスカバリー
         </Link>
         <div style={{height: 30, width: 2, backgroundColor: 'black', marginLeft: 20, marginRight: 20}}></div>
         <Link to="/app" className="logo">

@@ -139,7 +139,7 @@ const Dashboard = ({
                 }} 
                 style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30, paddingBottom: 30 }}
               >
-                <><FontAwesomeIcon icon={faPlus} style={{ marginRight: 5 }} /> 新作</>
+                <>新作</>
               </button>
             </div>
           </div>

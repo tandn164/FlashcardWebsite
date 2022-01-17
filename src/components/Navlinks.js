@@ -30,6 +30,9 @@ const Navlinks = ({ closeMenu, userName }) => {
       </div>
       <div className="avt-links">
         <ul>
+        <li style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
+          {userName}
+        </li>
         <li>
           <NavLink
             to="/my-account"
