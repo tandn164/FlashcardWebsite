@@ -15,6 +15,7 @@ const CardCreator = ({
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   const handleInput = (event) => {
     if (event.target.name === "front") {
@@ -30,6 +31,9 @@ const CardCreator = ({
       return;
     }
     if (back.length <=0 ) {
+      return;
+    }
+    if (uploading) {
       return;
     }
     console.log("Creating new card.");
@@ -77,7 +81,7 @@ const CardCreator = ({
         </div>
         <UploadAndDisplayImage onSetImage={(image)=>{
             setImage(image);
-        }} imageRef={image}/>
+        }} imageRef={image} onUploadingImage={setUploading}/>
         <button className="btn">Create</button>
       </form>
     </>
