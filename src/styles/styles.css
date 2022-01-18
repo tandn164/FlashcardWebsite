@@ -1368,9 +1368,9 @@ footer p {
   position: absolute;
   background-color: rgb(82, 108, 198);
   top: 60px;
-  right: -400px;
+  right: -500px;
   border-radius: 10px;
-  transition: all 0.2s ease-in-out 2s;
+  transition: all 0.1s ease-in-out 0.8s;
 }
 
 .link {
@@ -1379,7 +1379,7 @@ footer p {
 
 .avatar-btn:hover + .avt-links{
   opacity: 1;
-  right: -40px;
+  right: -7px;
   transition: all 0.2s ease 0s;
 }
 
