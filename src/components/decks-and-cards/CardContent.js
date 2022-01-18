@@ -11,7 +11,7 @@ const CardContent = ({
   return (
     <>
       {imageUrl && <div>
-        <img alt="not fount" height={"250px"} src={imageUrl} />
+        <img alt="not fount" style={{maxWidth: 350, maxHeight: 250}} src={imageUrl} />
         <br />
       </div>}
       <p className="content">
