@@ -75,6 +75,7 @@ import { dbMethods } from '../../firebase/dbMethods';
                <div className="account-data">
                    <h4>100コインを買う</h4>
                    <button className="btn btn-tertiary" onClick={() => {
+                     console.log(788888)
                        dbMethods.updateUser(user, (userStatus?.coin?? 0) + 100, userStatus?.isPrenium ?? false)
                     }}>
                      <span>50円から100コイン買う</span><FontAwesomeIcon icon={faAngleRight} className="icon" />

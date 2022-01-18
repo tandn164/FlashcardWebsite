@@ -19,13 +19,10 @@ const useOnUserStatusSnapshot = (user) => {
           coin: snapshot.data().coin
         }
         setUserStatus(status)
-        localStorage.setItem('isActive', JSON.stringify(snapshot.data().isActive))
-        localStorage.setItem('isPrenium', JSON.stringify(snapshot.data().isPrenium))
-        localStorage.setItem('coin', JSON.stringify(snapshot.data().coin))
       }, error => console.log("Error: ", error.message))
   
       return () => unsubscribe();
-    }, []);
+    }, [user]);
   
     return { userStatus };
   }
