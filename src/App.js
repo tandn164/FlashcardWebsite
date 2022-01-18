@@ -10,6 +10,7 @@ import { firebaseAuth } from './provider/AuthProvider';
 import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
 import useOnAllDecksSnapshot from './hooks/useOnAllDecksSnapshot';
 import useOnUserStatusSnapshot from './hooks/useOnUserStatusSnapshot';
+import useOnSavedDecksSnapshot from './hooks/useOnSavedDecksSnapshot';
 
 import Deck from './components/decks-and-cards/Deck';
 import Dashboard from './components/Dashboard';
@@ -29,7 +30,8 @@ const App = () => {
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
   const { decks } = useOnDecksSnapshot(user);
-  const { allDecks, saveDecks } = useOnAllDecksSnapshot(user);
+  const { allDecks } = useOnAllDecksSnapshot(user);
+  const { saveDecks } = useOnSavedDecksSnapshot(user);
   const { userStatus } = useOnUserStatusSnapshot(user); 
 
   const [decksData, setDecksData] = useState([]);
