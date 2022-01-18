@@ -63,7 +63,7 @@ const CardEditor = ({
           value={front}
           onChange={handleInput}
         />
-        <label htmlFor={card.id + "-front"}>Front</label>
+        <label htmlFor={card.id + "-front"}>フロント</label>
       </div>
       <div className="input-block">
         <textarea
@@ -72,16 +72,16 @@ const CardEditor = ({
           value={back}
           onChange={handleInput}
         />
-        <label htmlFor={card.id + "-back"}>Back</label>
+        <label htmlFor={card.id + "-back"}>バック</label>
       </div>
       <UploadAndDisplayImage onSetImage={(image)=>{
         setImage(image);
       }} imageRef={image}/>
-      <button className="btn">Update</button>
+      <button className="btn">アップデート</button>
       <button className="btn btn-warning"
         onClick={deleteCard}
       >
-        <FontAwesomeIcon icon={faTrash} /> Delete card
+        <FontAwesomeIcon icon={faTrash} /> 削除
       </button>
     </form>
   );
