@@ -17,7 +17,7 @@ import DeleteAccount from './DeleteAccount';
 import PageHeading from '../PageHeading';
 import UpdateProfile from './UpdateProfile';
 
-const MyAccount = () => {
+const MyAccount = ({userStatus}) => {
   const { user } = useContext(firebaseAuth);
   const [inputs, setInputs] = useState({ 
     email: user.email || "",
@@ -36,8 +36,9 @@ const MyAccount = () => {
     resetStatus
   } = useAuth(inputs.username, inputs.email, inputs.password, inputs.newPassword);
 
-  const isPrenium = JSON.parse(localStorage.getItem('isPrenium') ?? 'false')
-
+  const isPrenium = () => {
+    return userStatus?.isPrenium ?? false
+  }
   const history = useHistory();
 
   const handleChange = e => {
@@ -57,11 +58,11 @@ const MyAccount = () => {
             <div>
               <PageHeading
                 title="アカウント"
-                subTitle={isPrenium == 'true' ? "プレミアム" : "トライアル"}
-                subTitleStyles={{color: isPrenium ? 'green' : 'red', textAlign: 'center'}}
+                subTitle={isPrenium() ? "プレミアム" : "トライアル"}
+                subTitleStyles={{color: isPrenium() ? 'green' : 'red', textAlign: 'center'}}
               />
               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                <div>利用可能なコイン: 100 コイン</div>
+                <div>{`利用可能なコイン: ${userStatus?.coin ?? 0} コイン`}</div>
                 <button style={{width: 100, height: 30, borderRadius: 10, background: 'green', color: 'white', fontSize: 10}} onClick={() => {
                   history.push('/buy-coin')
                 }}>コインを買う</button>

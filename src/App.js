@@ -134,7 +134,9 @@ const App = () => {
         </Route>
         <Route path="/my-account">
           <main>
-            <MyAccount />
+            <MyAccount 
+              userStatus={userStatus}
+            />
           </main>
         </Route>
         <Route path="/upgrade">
