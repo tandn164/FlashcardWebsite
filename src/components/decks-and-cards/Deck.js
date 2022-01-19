@@ -230,14 +230,14 @@ const Deck = ({
         >
           <>マッチング</>
         </button>
-        <button
+        {/* <button
           onClick={() => {
             alert.show('機能は開発中です')
           }}
           style={{ color: '#B02A22', background: 'transparent', display: 'flex', border: 'unset', fontSize: 30 }}
         >
           <>履歴</>
-        </button>
+        </button> */}
       </div>
     </div>
 
