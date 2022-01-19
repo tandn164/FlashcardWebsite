@@ -156,7 +156,8 @@ const Deck = ({
         <div style={{
           position: 'absolute',
           top: 100,
-          
+          marginLeft: 10,
+          marginRight: 10
         }}>
           <p style={{ fontWeight: 'bold', fontSize: '25px'}}>{title}</p>
           

@@ -21,6 +21,7 @@ const CardEditor = ({
   const [front, setFront] = useState("");
   const [back, setBack] = useState("");
   const [image, setImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     setFront(card.front);
@@ -42,6 +43,9 @@ const CardEditor = ({
       return;
     }
     if (back.length <=0 ) {
+      return;
+    }
+    if (uploading) {
       return;
     }
     console.log("Card to update: ", card.id);
@@ -76,7 +80,7 @@ const CardEditor = ({
       </div>
       <UploadAndDisplayImage onSetImage={(image)=>{
         setImage(image);
-      }} imageRef={image}/>
+      }} imageRef={image} onUploadingImage={setUploading}/>
       <button className="btn">アップデート</button>
       <button className="btn btn-warning"
         onClick={deleteCard}
