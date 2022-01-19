@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import firebase from 'firebase';
 
-const useOnDecksSnapshot = () => {
+const useOnDecksSnapshot = (user) => {
   const db = firebase.firestore();
   const [decks, setDecks] = useState([]);
 
   // Get decks from collection where owner is the current user.
   useEffect(() => {
+    if (!user) {
+      setDecks([])
+      return
+    }
     let ref = db.collection('decks');    
     let unsubscribe = ref.onSnapshot((snapshot) => {
       let arr = [];
@@ -18,7 +22,7 @@ const useOnDecksSnapshot = () => {
     }, error => console.log("Error: ", error.message))
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 
   return { decks };
 }

@@ -45,7 +45,7 @@ const Nav = ({
           style={{outline: 'unset', height: 30, borderRadius: 15, paddingLeft: 10, borderColor: 'white'}}
           id="search"
           name="search"
-          placeholder='Search'
+          placeholder='検索'
           value={searchText}
           onChange={(e) => {
             setSearchText(e.target.value)

@@ -52,9 +52,28 @@ export const dbMethods = {
 
   deleteUser: (userId) => {
 
+    const updatedUser = {
+      isActive: false,
+    };
+
     db.collection("users")
       .doc(userId)
-      .delete()
+      .update(updatedUser)
+      .then(console.log("User successfully deleted."))
+      .catch((err) => {
+        console.error("Error deleting deck: ", err.message);
+      });
+  },
+
+  unlockUser: (userId) => {
+
+    const updatedUser = {
+      isActive: true,
+    };
+
+    db.collection("users")
+      .doc(userId)
+      .update(updatedUser)
       .then(console.log("User successfully deleted."))
       .catch((err) => {
         console.error("Error deleting deck: ", err.message);

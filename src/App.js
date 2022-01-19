@@ -19,8 +19,8 @@ import useOnDecksSnapshot from './hooks/useOnDecksSnapshot';
 const App = () => {
   const history = useHistory();
   const { user } = useContext(firebaseAuth);
-  const { users } = useOnUserSnapshot();
-  const { decks } = useOnDecksSnapshot();
+  const { users } = useOnUserSnapshot(user);
+  const { decks } = useOnDecksSnapshot(user);
 
   const [usersData, setUserData] = useState([]);
   const [decksData, setDeckData] = useState([]);

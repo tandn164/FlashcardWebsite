@@ -46,6 +46,7 @@ const Navlinks = ({ closeMenu, userName }) => {
         </li>
         </ul>
       </div>
+      <div style={{height: '36px', display: 'flex', alignItems: 'center', marginLeft: '8px', fontSize: '20px', color: 'white'}}>{userName}</div>
     </div>
   );
 };
