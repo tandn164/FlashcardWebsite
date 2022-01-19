@@ -67,36 +67,36 @@ import { dbMethods } from '../../firebase/dbMethods';
                  title="アップグレード"
                />
                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                 <div>{`利用可能なコイン: ${userStatus?.coin ?? 0} コイン`}</div>
+                 <div>{`利用可能なお金: ${userStatus?.coin ?? 0} 円`}</div>
                  <button style={{width: 100, height: 30, borderRadius: 10, background: 'green', color: 'white', fontSize: 10}} onClick={() => {
                    history.push('/buy-coin')
-                 }}>コインを買う</button>
+                 }}>お金を入金する</button>
                </div>
                <h3>
                    {isPrenium() ? "現在プレミアム機能を使用しています" : "現在トライアル機能を使用しています"}
                </h3>
                {!isPrenium() && <div className="account-data">
-                   <h4>これらの機能のロックを解除するには、100コイン/月でプレミアムにアップグレードしてください： </h4>
+                   <h4>これらの機能のロックを解除するには、100円/月でプレミアムにアップグレードしてください： </h4>
                    <h5 style={{color: 'green'}}>・フラッシュカードの無制限の作成セット</h5>
                    <h5 style={{color: 'orange'}}>・他の人のフラッシュカードのセットを無制限に保存</h5>
                    <button className="btn btn-tertiary" onClick={() => {
                        if ((userStatus?.coin ?? 0) < 100) {
-                           alert.show("コインが足りない場合は、アップグレードするためにコインを追加購入してください")
+                           alert.show("お金が足りない場合は、アップグレードするためにお金を追加入金してください")
                        } else {
                            dbMethods.updateUser(user, userStatus?.coin - 100, true)
                        }
                    }}>
-                     <span>100コイン/月でプレミアムにアップグレード</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                     <span>100円/月でプレミアムにアップグレード</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
                    </button>
                </div>}
-               <h4>これらの機能のロックを解除するには、500コイン/月でVIPにアップグレードしてください： </h4>
+               <h4>これらの機能のロックを解除するには、500円/月でVIPにアップグレードしてください： </h4>
                    <h5 style={{color: 'green'}}>・フラッシュカードのテストをカスタマイズします</h5>
                    <h5 style={{color: 'orange'}}>・フラッシュカードからコンテストを作成する</h5>
                    <h5 style={{color: 'blue'}}>・セットをダウンロードし、テストし、doc、pdf、..でコンテストします</h5>
                    <button className="btn btn-tertiary" onClick={() => {
                        alert.show('機能は開発中です')
                     }}>
-                     <span>500コイン/月でVIPにアップグレード</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                     <span>500円/月でVIPにアップグレード</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
                    </button>
              </div>
            </Route>

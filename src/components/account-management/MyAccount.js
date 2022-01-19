@@ -62,10 +62,10 @@ const MyAccount = ({userStatus}) => {
                 subTitleStyles={{color: isPrenium() ? 'green' : 'red', textAlign: 'center'}}
               />
               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                <div>{`利用可能なコイン: ${userStatus?.coin ?? 0} コイン`}</div>
+                <div>{`利用可能なお金: ${userStatus?.coin ?? 0} 円`}</div>
                 <button style={{width: 100, height: 30, borderRadius: 10, background: 'green', color: 'white', fontSize: 10}} onClick={() => {
                   history.push('/buy-coin')
-                }}>コインを買う</button>
+                }}>お金を入金する</button>
                 <button style={{width: 100, height: 30, borderRadius: 10, background: 'rgb(234, 178, 174)', fontSize: 10}} onClick={() => {
                   history.push('/upgrade')
                 }}>アップグレード</button>

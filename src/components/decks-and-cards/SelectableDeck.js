@@ -86,6 +86,9 @@ const SelectableDeck = ({
       <text style={{fontWeight: '500', display: '-webkit-box', wordBreak: 'break-word'}}>{deck.description}</text>
         </div>
       </div>
+      <div>
+      保存回数: {deck.saveCount}
+      </div>
       <div className="button-row">
         {mine ? <button 
           className="btn btn-icon"

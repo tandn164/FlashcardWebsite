@@ -17,6 +17,7 @@ const useOnDecksSnapshot = (user) => {
       let arr = [];
       snapshot.forEach(deck => arr.push({
         id: deck.id,
+        saveCount: deck.data().saved_users.length,
         ...deck.data()
       }));
       setDecks(arr);

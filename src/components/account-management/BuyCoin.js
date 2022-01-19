@@ -64,28 +64,28 @@ import { dbMethods } from '../../firebase/dbMethods';
            <Route exact path="/buy-coin">
              <div>
                <PageHeading
-                 title="コインを買う"
+                 title="お金を入金する"
                />
                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-                 <div>{`利用可能なコイン: ${userStatus?.coin ?? 0} コイン`}</div>
+                 <div>{`利用可能な円: ${userStatus?.coin ?? 0} 円`}</div>
                  <button style={{width: 100, height: 30, borderRadius: 10, background: 'rgb(234, 178, 174)', fontSize: 10}} onClick={() => {
                      history.push('/upgrade')
                   }}>アップグレード</button>
                </div>
                <div className="account-data">
-                   <h4>100コインを買う</h4>
+                   <h4>100円を入金する</h4>
                    <button className="btn btn-tertiary" onClick={() => {
                      console.log(788888)
                        dbMethods.updateUser(user, (userStatus?.coin?? 0) + 100, userStatus?.isPrenium ?? false)
                     }}>
-                     <span>50円から100コイン買う</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                     <span>100円を入金する</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
                    </button>
                </div>
-               <h4>1000コインを買う</h4>
+               <h4>1000円を入金する</h4>
                    <button className="btn btn-tertiary" onClick={() => {
                        dbMethods.updateUser(user, (userStatus?.coin?? 0) + 1000, userStatus?.isPrenium ?? false)
                     }}>
-                     <span>500円から1000コイン買う</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
+                     <span>1000円を入金する</span><FontAwesomeIcon icon={faAngleRight} className="icon" />
                    </button>
              </div>
            </Route>
