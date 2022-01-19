@@ -7,7 +7,7 @@
  import React, { useState, useEffect } from 'react';
  import firebase from 'firebase';
  
- import { useParams } from 'react-router-dom';
+ import { useHistory, useParams } from 'react-router-dom';
  
  import Spinner from '../Spinner';
  
@@ -27,6 +27,7 @@
   }
 
  const Test = () => {
+   const history = useHistory();
    const [cards, setCards] = useState([]);
    const [hashCards, setHashCards] = useState(null);
    const [isCardFlipped, setIsCardFlipped] = useState(false);
@@ -184,6 +185,23 @@
    return (
 
     <div>
+      <div 
+        style={{
+            borderRadius: '10px', 
+            backgroundColor: 'gray', 
+            color: 'white', 
+            width: '100px',
+            padding: '4px',
+            textAlign: 'center',
+            cursor: 'pointer',
+            marginBottom: '4px'
+        }} 
+        onClick={() => {
+        history.push('/app/d/'+hash)
+        }}
+      >
+        戻る
+      </div>
         {result != null && <div style={{
             fontSize: 50,
             marginBottom: 30,
@@ -201,6 +219,7 @@
             lineHeight: 2,
             verticalAlign: 'center',
             borderRadius: 25,
+            cursor: 'pointer'
         }} onClick={(event) => {
             let totalResult = 0
             for (let index = 0; index < selectedAnswer.length; index++) {
@@ -212,7 +231,8 @@
             }
             setSubmitted(true);
             setResult(totalResult);
-        }}>Submit</div>
+            window.scrollTo(0, 0);
+        }}>回答を送信する</div>
     </div>
    );
  }

@@ -8,12 +8,14 @@ import React, { useState, useEffect } from 'react';
 import firebase from 'firebase';
 
 import { useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 import Spinner from '../Spinner';
 import PageHeading from '../PageHeading';
 import { useAlert } from 'react-alert';
 
 const shuffleCard = (array) => {
+
     if (!array) {
         return []
     }
@@ -32,6 +34,8 @@ const shuffleCard = (array) => {
 }
 
 const TestCompare = () => {
+    const history = useHistory();
+
     const [hashCards, setHashCards] = useState([]);
     const [originCards, setOriginCards] = useState([]);
     const [randomCards, setRandomCards] = useState([]);
@@ -88,13 +92,34 @@ const TestCompare = () => {
 
     if (!hashCards) return (
         <div className="container center">
-            <p>We couldn't find this deck. :(</p>
+            {/* <p>We couldn't find this deck. :(</p> */}
+            <p>ローディング...(</p>
         </div>
     )
 
     if (!canView || hashCards.length === 0) return (
-        <div className="container center">
-            <p>Done!</p>
+        <div style={{display: 'flex', flexDirection: 'column', marginTop: '20vh'}}>
+            <div style={{textAlign: 'center'}}>
+                <p style={{fontSize: '30px'}}>テストが完了しました。 よくやった！</p>
+            </div>
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div 
+                    style={{
+                        borderRadius: '10px', 
+                        backgroundColor: 'gray', 
+                        color: 'white', 
+                        width: '100px',
+                        padding: '4px',
+                        textAlign: 'center',
+                        cursor: 'pointer'
+                    }} 
+                    onClick={() => {
+                    history.push('/app/d/'+hash)
+                    }}
+                >
+                    戻る
+                </div>
+            </div>
         </div>
     );
 
@@ -102,13 +127,13 @@ const TestCompare = () => {
         if (originCards[index1].back != randomCards[index2].back) {
             setSelectedIndex1(null)
             setSelectedIndex2(null)
-            alert.show('Wrong!')
+            alert.show('間違い!')
         } else {
             originCards.splice(index1, 1);
             randomCards.splice(index2, 1);
             setSelectedIndex1(null)
             setSelectedIndex2(null)
-            alert.show('Correct!')
+            alert.show('正しい!')
         }
     }
 
@@ -190,7 +215,7 @@ const TestCompare = () => {
         <div style={{ display: 'flex' }}>
             <div style={{ width: '50%', margin: '0 auto', paddingRight: 30 }}>
                 <PageHeading
-                    title="Front"
+                    title="フロント"
                 />
                 <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                     <div>
@@ -200,7 +225,7 @@ const TestCompare = () => {
             </div>
             <div style={{ width: '50%', margin: '0 auto', paddingLeft: 30 }}>
                 <PageHeading
-                    title="Back"
+                    title="バック"
                 />
                 <div style={{ padding: 20, background: '#B9BBEA', borderRadius: 10 }}>
                     <div>

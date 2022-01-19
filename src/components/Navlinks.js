@@ -13,7 +13,6 @@ const Navlinks = ({ closeMenu, userName }) => {
 
   useEffect(() => {
     setBgColor('#' + getRandomColor());
-    console.log(bgColor);
     getFirstChar();
   },[userName]);
 
@@ -21,8 +20,6 @@ const Navlinks = ({ closeMenu, userName }) => {
     return Math.floor(Math.random()*16777215).toString(16)
   }
 
-
-  
   return (
     <div style={{position: 'relative', display: 'flex'}}>
       <div className="avatar-btn" style={{backgroundColor: `${bgColor}`}}>
@@ -30,9 +27,6 @@ const Navlinks = ({ closeMenu, userName }) => {
       </div>
       <div className="avt-links">
         <ul>
-        <li style={{color: 'white', fontSize: 20, textAlign: 'center'}}>
-          {userName}
-        </li>
         <li>
           <NavLink
             to="/my-account"
@@ -49,6 +43,7 @@ const Navlinks = ({ closeMenu, userName }) => {
         </li>
         </ul>
       </div>
+      <div style={{height: '36px', display: 'flex', alignItems: 'center', marginLeft: '8px', fontSize: '20px', color: 'white'}}>{userName}</div>
     </div>
   );
 };

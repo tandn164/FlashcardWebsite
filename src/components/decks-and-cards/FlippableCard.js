@@ -27,7 +27,7 @@ const FlippableCard = ({
         name="exit"
         onClick={onClick}
       >
-        <FontAwesomeIcon icon={faTimes} />&nbsp;Close
+        <FontAwesomeIcon icon={faTimes} />&nbsp;クローズ
       </button>
     </Header>
   );

@@ -141,7 +141,7 @@ const DeckEditor = ({
           className="btn btn-primary"
           onClick={checkReadyToUpdate}
         >
-          {updateSuccess ? "Success!" : "編集" }
+          {updateSuccess ? "編集に成功しました！" : "編集" }
         </button>
       <div>
         <PageHeading 

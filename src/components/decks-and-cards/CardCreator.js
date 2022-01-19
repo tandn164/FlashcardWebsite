@@ -48,7 +48,7 @@ const CardCreator = ({
     <button className="btn btn-tertiary"
       onClick={() => setIsOpen(true)}
     >
-      Add card <FontAwesomeIcon icon={faPlus} className="icon" />
+      新しいカードを追加する <FontAwesomeIcon icon={faPlus} className="icon" />
     </button>
   );
 
@@ -57,7 +57,7 @@ const CardCreator = ({
       <button id="add" className="btn btn-tertiary highlighted"
         onClick={() => setIsOpen(false)}
       >
-        Add card <FontAwesomeIcon icon={faMinus} className="icon"/>
+        新しいカードを追加する <FontAwesomeIcon icon={faMinus} className="icon"/>
       </button>
       <form className="card-editor" onSubmit={createCard}>
         <div className="input-block">
@@ -67,7 +67,7 @@ const CardCreator = ({
             value={front}
             onChange={handleInput}
           />
-          <label htmlFor="new-front">Front</label>
+          <label htmlFor="new-front">フロント</label>
         </div>
         <div className="input-block">
           <textarea
@@ -77,12 +77,12 @@ const CardCreator = ({
             onChange={handleInput}
             style={{outline: "none"}}
           />        
-          <label htmlFor="new-back">Back</label>
+          <label htmlFor="new-back">バック</label>
         </div>
         <UploadAndDisplayImage onSetImage={(image)=>{
             setImage(image);
-        }} imageRef={image} onUploadingImage={setUploading}/>
-        <button className="btn">Create</button>
+          }} imageRef={image} onUploadingImage={setUploading}/>
+        <button className="btn">追加する</button>
       </form>
     </>
   );

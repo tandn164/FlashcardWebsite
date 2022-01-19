@@ -79,8 +79,8 @@ const Deck = ({
         return (
           <FlippableCard
             key={ele.id}
-            frontTitle="Front"
-            backTitle="Back"
+            frontTitle="フロント"
+            backTitle="バック"
             frontText={ele.front}
             backText={ele.back}
             onClick={onClick}
@@ -94,8 +94,8 @@ const Deck = ({
         return (
           <FlippableCard
             key={ele.id}
-            frontTitle="Front"
-            backTitle="Back"
+            frontTitle="フロント"
+            backTitle="バック"
             frontText={ele.front}
             backText={ele.back}
             onClick={onClick}
@@ -155,47 +155,50 @@ const Deck = ({
       <div style={{ width: 250, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', alignItems: 'center', backgroundColor: '#DADCE2' }}>
         <div style={{
           position: 'absolute',
-          top: 100
+          top: 100,
+          marginLeft: 10,
+          marginRight: 10
         }}>
-          {title}
-          <br/>
-          <br/>
+          <p style={{ fontWeight: 'bold', fontSize: '25px'}}>{title}</p>
+          
           <br/>
           
           <div style={{maxWidth: 200}}>
-            {"説明: "}
+            <p style={{ fontWeight: 'bold', fontSize: '25px'}}>説明: </p>
             <text style={{fontWeight: '500', display: '-webkit-box', wordBreak: 'break-word'}}>{description}</text>
           </div>
         </div>
         <div style={{
-          background: shuffle == 0 ? 'wheat' : 'green',
+          background: shuffle == 0 ? 'green' : 'grey',
           height: 30,
           width: 100,
           textAlign: 'center',
           zIndex: 1,
-          color: shuffle == 0 ? 'black' : 'white',
+          color: shuffle == 0 ? 'white' : 'black',
           lineHeight: 2,
           verticalAlign: 'center',
           borderRadius: 15,
+          cursor: 'pointer'
         }} onClick={(event) => {
           setShuffle(0)
-        }}>ソート済み</div>
+        }}>ソート順</div>
         <div style={{
-          background: shuffle != 0 ? 'wheat' : 'green',
+          background: shuffle != 0 ? 'green' : 'gray',
           height: 30,
           width: 100,
           textAlign: 'center',
           zIndex: 1,
-          color: shuffle != 0 ? 'black' : 'white',
+          color: shuffle != 0 ? 'white' : 'black',
           marginTop: 50,
           marginBottom: 100,
           lineHeight: 2,
           verticalAlign: 'center',
           borderRadius: 15,
+          cursor: 'pointer'
         }} onClick={(event) => {
           setCardShuffle(shuffleCard(cardShuffle))
           setShuffle(prev => prev + 1)
-        }}>ランダム</div>
+        }}>ランダム順</div>
       </div>
       <Carousel
         items={shuffle != 0 ? cardShuffle : cards}
