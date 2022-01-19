@@ -17,7 +17,7 @@ const useOnSavedDecksSnapshot = (user) => {
       snapshot.forEach(deck => {
         let data = {
           id: deck.id,
-          saveCount: deck.data().saved_users.length,
+          saveCount: deck.data().saved_users?.length ?? 0,
           ...deck.data()
         };
         if (data.saved_users?.includes(user.uid)) {
